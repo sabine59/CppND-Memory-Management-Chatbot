@@ -23,7 +23,8 @@ ChatLogic::ChatLogic()
  _chatBot = new ChatBot("../images/user.png"); // SCS 24.09.  - rule of five - debug help
   
        std::cout << "_chatBot at: "<< _chatBot <<std::endl; // SCS debug
-  ChatBot* doubleBot(_chatBot); // SCS 24.09.  - rule of five - debug help
+  
+  ChatBot *doubleBot(_chatBot); // SCS 24.09.  - rule of five - debug help
   
 
        std::cout << "doubleBot at: "<< doubleBot <<std::endl; // SCS debug

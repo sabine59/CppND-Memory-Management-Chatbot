@@ -49,11 +49,11 @@ ChatBot::~ChatBot()
     {
     
       
-        _image = new wxBitmap();
-        *_image= *source._image;
-      int width= _image->GetSize().GetWidth();
+   
+      _image = new wxBitmap(source._image->GetWidth(), source._image->GetHeight(), source._image->GetDepth());
+      *_image  = *source._image;
       
-        std::cout << "ChatBot copy constructor: COPYING content of instance " << &source << " to instance " << this << width <<std::endl;
+        std::cout << "ChatBot copy constructor: COPYING content of instance " << &source << " to instance " << this <<std::endl;
     }
 
 /*
