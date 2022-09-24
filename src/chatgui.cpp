@@ -164,7 +164,7 @@ ChatBotPanelDialog::ChatBotPanelDialog(wxWindow *parent, wxWindowID id)
     ////
 
     // create chat logic instance
-    _chatLogic = new ChatLogic(); 
+    _chatLogic = std::make_unique<ChatLogic>();  // SCS 24.09 - implementing unique_ptr
   //  std::cout << "ChatBotPanelDialog: new _chatlogic instance \r\n"; // SCS debug
 
 
@@ -192,10 +192,10 @@ ChatBotPanelDialog::~ChatBotPanelDialog()
       _dialogSizer = NULL;
     } */
    
-   if (_chatLogic != nullptr) { // SCS 22.09.2022
+ /*  if (_chatLogic != nullptr) { // SCS 24.09 - implementing unique_ptr
         delete _chatLogic;
         _chatLogic = nullptr;
-    } 
+    } */
 
 
     ////
