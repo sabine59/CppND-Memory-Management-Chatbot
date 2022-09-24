@@ -184,18 +184,9 @@ ChatBotPanelDialog::ChatBotPanelDialog(wxWindow *parent, wxWindowID id)
 
 ChatBotPanelDialog::~ChatBotPanelDialog()
 {
-       std::cout << "ChatBotPanelDialog destructor is called " <<std::endl; // SCS debug
     //// STUDENT CODE
     ////
- /*   if (_dialogSizer != NULL) { // SCS 22.09.2022
-      delete _dialogSizer;
-      _dialogSizer = NULL;
-    } */
-   
- /*  if (_chatLogic != nullptr) { // SCS 24.09 - implementing unique_ptr
-        delete _chatLogic;
-        _chatLogic = nullptr;
-    } */
+    std::cout << "ChatBotPanelDialog destructor is called " <<std::endl; // SCS debug
 
 
     ////
