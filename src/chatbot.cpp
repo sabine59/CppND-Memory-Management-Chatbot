@@ -45,7 +45,66 @@ ChatBot::~ChatBot()
 
 //// STUDENT CODE
 ////
+    ChatBot::ChatBot(const ChatBot &source) // SCS 24.09. rule of five - copy constructor
+    {
+    
+      
+        _image = new wxBitmap();
+        *_image= *source._image;
+      int width= _image->GetSize().GetWidth();
+      
+        std::cout << "ChatBot copy constructor: COPYING content of instance " << &source << " to instance " << this << width <<std::endl;
+    }
 
+/*
+ // data handles (owned)
+    wxBitmap *_image; // avatar image
+
+    // data handles (not owned)
+    GraphNode *_currentNode;
+    GraphNode *_rootNode;
+    ChatLogic *_chatLogic;
+    */
+    /*
+    ChatBot::ChatBot(ChatBot &&source) // // SCS 24.09. rule of five -  move constructor
+    {
+        std::cout << "ChatBot move constructor: MOVING ChatBot instance " << &source << " to instance " << this << std::endl;
+        *_image = *source._image;
+        _size = source._size;
+        source._data = nullptr;
+        source._size = 0;
+    }
+    
+    
+    ChatBot::ChatBot &operator=(const ChatBot &source) // // SCS 24.09. rule of five -  copy assignment operator
+    {
+        std::cout << "ChatBot copy assignement operator - ASSIGNING content of instance " << &source << " to instance " << this << std::endl;
+        if (this == &source)
+            return *this;
+        delete _image;
+        _size = source._size;
+        _data = new ChatBot(source._size);
+        *_data = *source._data;
+        _size = source._size;
+        source.data = nullptr;
+        source.size = 0;
+        return *this;
+    }
+    
+     ChatBot::ChatBot &operator=(const ChatBot &&source) // // SCS 24.09. rule of five -  move assignment operator
+    {
+        std::cout << "ChatBot move assignement operator - ASSIGNING content of instance " << &source << " to instance " << this << std::endl;
+        if (this == &&source)
+            return *this;
+        delete _data;
+        _size = source._size;
+        _data = new ChatBot(source._size);
+        *_data = *source._data;
+        _size = source._size;
+        source.data = nullptr;
+        source.size = 0;
+        return *this;
+    } */
 ////
 //// EOF STUDENT CODE
 
