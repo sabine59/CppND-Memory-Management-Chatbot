@@ -19,16 +19,16 @@ ChatLogic::ChatLogic()
 
        std::cout << "ChatLogic constructor is called " <<std::endl; // SCS debug
     // create instance of chatbot
-   // _chatBot = new ChatBot("../images/chatbot.png");
- _chatBot = new ChatBot("../images/user.png"); // SCS 24.09.  - rule of five - debug help
-  
-       std::cout << "_chatBot at: "<< _chatBot <<std::endl; // SCS debug
-  
-  ChatBot *doubleBot(_chatBot); // SCS 24.09.  - rule of five - debug help
-  
+  _chatBot = new ChatBot("../images/chatbot.png");
+  std::cout << "_chatBot at: "<< _chatBot <<std::endl; // SCS debug
 
-       std::cout << "doubleBot at: "<< doubleBot <<std::endl; // SCS debug
+
+  // test copy constructor
+ //  ChatBot *doubleBot(_chatBot); // SCS 24.09.  - rule of five - debug help
   
+    // test move constructor
+  ChatBot *doubleBot(std::move(_chatBot)); // SCS 24.09.  - rule of five - debug help
+  std::cout << "doubleBot at: "<< doubleBot <<std::endl; // SCS debug
   
     // add pointer to chatlogic so that chatbot answers can be passed on to the GUI
  //   _chatBot->SetChatLogicHandle(this);

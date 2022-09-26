@@ -45,37 +45,34 @@ ChatBot::~ChatBot()
 
 //// STUDENT CODE
 ////
-    ChatBot::ChatBot(const ChatBot &source) // SCS 24.09. rule of five - copy constructor
+    ChatBot::ChatBot(const ChatBot &source)  // SCS 24.09. rule of five - copy constructor
     {
     
+        std::cout << "ChatBot copy constructor " << this <<std::endl;
       
-   
       _image = new wxBitmap(source._image->GetWidth(), source._image->GetHeight(), source._image->GetDepth());
       *_image  = *source._image;
-      
+      *_chatLogic = *source._chatLogic;
+      *_rootNode = *source._rootNode;
         std::cout << "ChatBot copy constructor: COPYING content of instance " << &source << " to instance " << this <<std::endl;
     }
 
-/*
- // data handles (owned)
-    wxBitmap *_image; // avatar image
 
-    // data handles (not owned)
-    GraphNode *_currentNode;
-    GraphNode *_rootNode;
-    ChatLogic *_chatLogic;
-    */
-    /*
+    
     ChatBot::ChatBot(ChatBot &&source) // // SCS 24.09. rule of five -  move constructor
     {
         std::cout << "ChatBot move constructor: MOVING ChatBot instance " << &source << " to instance " << this << std::endl;
-        *_image = *source._image;
-        _size = source._size;
-        source._data = nullptr;
-        source._size = 0;
+      _image = new wxBitmap(source._image->GetWidth(), source._image->GetHeight(), source._image->GetDepth());
+      *_image  = *source._image;
+      source._image = NULL;
+      *_chatLogic = *source._chatLogic;
+      source._chatLogic = nullptr;
+      *_rootNode = *source._rootNode;
+      source._rootNode = nullptr;
+       
     }
     
-    
+/*    
     ChatBot::ChatBot &operator=(const ChatBot &source) // // SCS 24.09. rule of five -  copy assignment operator
     {
         std::cout << "ChatBot copy assignement operator - ASSIGNING content of instance " << &source << " to instance " << this << std::endl;

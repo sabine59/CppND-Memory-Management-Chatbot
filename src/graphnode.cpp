@@ -15,14 +15,14 @@ GraphNode::~GraphNode()
 
    std::cout << "GraphNode destructor is called " <<std::endl; // SCS debug
    if (_chatBot != nullptr) {  // SCS 22.09.
-         std::cout << "GraphNode destructor is called: " << _chatBot<< " " << std::endl; // SCS debug
+         //std::cout << "GraphNode destructor is called: " << _chatBot<< " " << std::endl; // SCS debug
 
 
      delete _chatBot; 
      _chatBot = nullptr;
     } else {
 
-         std::cout << "GraphNode destructor is called: _chatBot = nullptr " << std::endl; // SCS debug
+         //std::cout << "GraphNode destructor is called: _chatBot = nullptr " << std::endl; // SCS debug
     }
 
     ////

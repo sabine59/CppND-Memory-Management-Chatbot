@@ -31,8 +31,9 @@ public:
     //// STUDENT CODE
     ////
     ChatBot(const ChatBot &source); // SCS 24.09. rule of five - copy constructor
-    /*
     ChatBot(ChatBot &&source);      // SCS 24.09. rule of five -  move constructor
+    
+    /*
     ChatBot &operator=(const ChatBot &source); // SCS 24.09. rule of five -  copy assignment operator
     ChatBot &operator=(const ChatBot &&source); // // SCS 24.09. rule of five -  move assignment operator
 */
