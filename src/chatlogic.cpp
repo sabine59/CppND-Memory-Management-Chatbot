@@ -27,7 +27,11 @@ ChatLogic::ChatLogic()
  //  ChatBot *doubleBot(_chatBot); // SCS 24.09.  - rule of five - debug help
   
     // test move constructor
-  ChatBot *doubleBot(std::move(_chatBot)); // SCS 24.09.  - rule of five - debug help
+ // ChatBot *doubleBot(std::move(_chatBot)); // SCS 24.09.  - rule of five - debug help
+  
+     // test copy assignement operator
+ ChatBot *doubleBot;
+  doubleBot = _chatBot; // SCS 24.09.  - rule of five - debug help 
   std::cout << "doubleBot at: "<< doubleBot <<std::endl; // SCS debug
   
     // add pointer to chatlogic so that chatbot answers can be passed on to the GUI

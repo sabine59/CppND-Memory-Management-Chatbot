@@ -3,6 +3,7 @@
 
 #include <wx/bitmap.h>
 #include <string>
+#include <iostream>
 
 class GraphNode; // forward declaration
 class ChatLogic; // forward declaration
@@ -20,6 +21,11 @@ private:
 
     // proprietary functions
     int ComputeLevenshteinDistance(std::string s1, std::string s2);
+    
+    ChatBot(const ChatBot &source);     // SCS 24.09. rule of five -  copy constructor, no copy allowed, because _chatLogic will be constructed recursively
+    ChatBot &operator=(const ChatBot &source) ;   // SCS 24.09. rule of five -  copy assignment operator, no copy allowed,  because _chatLogic will be constructed recursively
+
+   
 
 public:
     // constructors / destructors
@@ -30,13 +36,9 @@ public:
 
     //// STUDENT CODE
     ////
-    ChatBot(const ChatBot &source); // SCS 24.09. rule of five - copy constructor
-    ChatBot(ChatBot &&source);      // SCS 24.09. rule of five -  move constructor
-    
-    /*
-    ChatBot &operator=(const ChatBot &source); // SCS 24.09. rule of five -  copy assignment operator
-    ChatBot &operator=(const ChatBot &&source); // // SCS 24.09. rule of five -  move assignment operator
-*/
+   ChatBot(ChatBot &&source);      // SCS 24.09. rule of five -  move constructor
+   ChatBot &operator=(ChatBot &&source); // // SCS 24.09. rule of five -  move assignment operator
+
     ////
     //// EOF STUDENT CODE
 
