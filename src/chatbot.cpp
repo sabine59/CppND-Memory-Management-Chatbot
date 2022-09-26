@@ -40,7 +40,7 @@ ChatBot::~ChatBot()
         delete _image;
         _image = NULL;
     }
-
+    
 }
 
 //// STUDENT CODE
@@ -54,15 +54,22 @@ ChatBot::~ChatBot()
      
 ChatBot::ChatBot(ChatBot &&source) // SCS 24.09. rule of five -  move constructor
     {
-        std::cout << "ChatBot move constructor: MOVING ChatBot instance " << &source << " to instance " << this << std::endl;
-      _image = new wxBitmap(source._image->GetWidth(), source._image->GetHeight(), source._image->GetDepth());
-      *_image  = *source._image;
+      std::cout << "ChatBot move constructor: MOVING ChatBot instance " << &source << " to instance " << this << std::endl;
+   
+      if (_image != NULL)
+       	delete _image;
+      _image = std::move(source._image);
       source._image = NULL;
+     
       _chatLogic = std::move(source._chatLogic);
       source._chatLogic = nullptr;
-      _rootNode = source._rootNode;
+  
+      _rootNode = std::move(source._rootNode);
       source._rootNode = nullptr;
     }
+
+  // SCS 24.09. rule of five -  move assignement operator: is implemented in header-file
+ 
     
 /*
 ChatBot::ChatBot &operator =(ChatBot &&source)   // SCS 24.09. rule of five -  move assignment operator

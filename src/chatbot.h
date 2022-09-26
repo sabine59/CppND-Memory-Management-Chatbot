@@ -46,16 +46,13 @@ public:
       _image = std::move(source._image);
       source._image = NULL;
      
-   
       _chatLogic = std::move(source._chatLogic);
       source._chatLogic = nullptr;
-  
   
       _rootNode = std::move(source._rootNode);
       source._rootNode = nullptr;
       return *this;
-    }  
-    ////    ////
+    }
 
 
     //// EOF STUDENT CODE
