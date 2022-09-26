@@ -64,11 +64,11 @@ ChatBot::ChatBot(ChatBot &&source) // SCS 24.09. rule of five -  move constructo
       source._rootNode = nullptr;
     }
     
-
+/*
 ChatBot::ChatBot &operator =(ChatBot &&source)   // SCS 24.09. rule of five -  move assignment operator
     {
        std::cout << "ChatBot move assignement operator - ASSIGNING content of instance " << &source << " to instance " << this << std::endl;
-        if (this == &&source)
+        if (this == &source)
             return *this;
        delete _image;
       _image = new wxBitmap(source._image->GetWidth(), source._image->GetHeight(), source._image->GetDepth());
@@ -78,11 +78,10 @@ ChatBot::ChatBot &operator =(ChatBot &&source)   // SCS 24.09. rule of five -  m
       _chatLogic = std::move(source._chatLogic);
       source._chatLogic = nullptr;
   
-      delete _rootNode;
       _rootNode = source._rootNode;
       source._rootNode = nullptr;
       return *this;
-    }  
+    }  */
 
 ////
 //// EOF STUDENT CODE

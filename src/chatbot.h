@@ -37,9 +37,27 @@ public:
     //// STUDENT CODE
     ////
    ChatBot(ChatBot &&source);      // SCS 24.09. rule of five -  move constructor
-   ChatBot &operator=(ChatBot &&source); // // SCS 24.09. rule of five -  move assignment operator
+   ChatBot &operator=(ChatBot &&source) { // SCS 24.09. rule of five -  move assignement operator
+  
+       std::cout << "ChatBot move assignement operator - ASSIGNING content of instance " << &source << " to instance " << this << std::endl;
+     
+      if (_image != NULL)
+       	delete _image;
+      _image = std::move(source._image);
+      source._image = NULL;
+     
+   
+      _chatLogic = std::move(source._chatLogic);
+      source._chatLogic = nullptr;
+  
+  
+      _rootNode = std::move(source._rootNode);
+      source._rootNode = nullptr;
+      return *this;
+    }  
+    ////    ////
 
-    ////
+
     //// EOF STUDENT CODE
 
     // getters / setters
