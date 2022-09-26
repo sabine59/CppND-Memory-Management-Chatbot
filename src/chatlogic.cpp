@@ -57,10 +57,11 @@ ChatLogic::~ChatLogic()
     }  */
 
     // delete all nodes
-    for (auto it = std::begin(_nodes); it != std::end(_nodes); ++it)
+  // SCS 26.09 - no delete, because unique pointers are deleted automatically
+ /*   for (auto it = std::begin(_nodes); it != std::end(_nodes); ++it)
     {
         delete *it;
-    }
+    } */ 
 
     // delete all edges
     for (auto it = std::begin(_edges); it != std::end(_edges); ++it)
@@ -148,16 +149,16 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
                         ////
 
                         // check if node with this ID exists already
-                        auto newNode = std::find_if(_nodes.begin(), _nodes.end(), [&id](GraphNode *node) { return node->GetID() == id; });
-
+                        auto newNode_unique = std::find_if(_nodes.begin(), _nodes.end(),  [&id](GraphNode *node) { return node->GetID() == id; }); // SCS 26.09 task 3: exclusive ownership
+						GraphNode *newNode; // SCS 26.09 task 3: exclusive ownership
                         // create new element if ID does not yet exist
-                        if (newNode == _nodes.end())
+                        if (newNode_unique == _nodes.end())
                         {
-                            _nodes.emplace_back(new GraphNode(id));
-                            newNode = _nodes.end() - 1; // get iterator to last element
-
+                            _nodes.push_back(std::make_unique<GraphNode> (id)); // SCS 26.09 task 3: exclusive ownership
+                            newNode_unique = _nodes.end() - 1; // SCS 26.09 task 3: exclusive ownership // get iterator to last element
+					        
                             // add all answers to current node
-                            AddAllTokensToElement("ANSWER", tokens, **newNode);
+                            AddAllTokensToElement("ANSWER", tokens, *(*newNode_unique).get()); // SCS 26.09 task 3: exclusive ownership
                         }
 
                         ////
@@ -182,8 +183,8 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
 
                             // create new edge
                             GraphEdge *edge = new GraphEdge(id);
-                            edge->SetChildNode(*childNode);
-                            edge->SetParentNode(*parentNode);
+                            edge->SetChildNode(childNode->get()); // SCS 26.09 task 3: exclusive ownership
+                            edge->SetParentNode(parentNode->get()); // SCS 26.09 task 3: exclusive ownership
                             _edges.push_back(edge);
 
                             // find all keywords for current node
@@ -227,7 +228,7 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
 
             if (rootNode == nullptr)
             {
-                rootNode = *it; // assign current node to root
+                rootNode = it->get(); // SCS 26.09 task 3: exclusive ownership // assign current node to root
             }
             else
             {
