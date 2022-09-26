@@ -22,9 +22,10 @@ private:
     // proprietary functions
     int ComputeLevenshteinDistance(std::string s1, std::string s2);
     
-    ChatBot(const ChatBot &source);     // SCS 24.09. rule of five -  copy constructor, no copy allowed, because _chatLogic will be constructed recursively
-    ChatBot &operator=(const ChatBot &source) ;   // SCS 24.09. rule of five -  copy assignment operator, no copy allowed,  because _chatLogic will be constructed recursively
-
+     //// STUDENT CODE
+    ChatBot(const ChatBot &source);     // SCS 24.09. rule of five -  copy constructor, no copy allowed, because cannot allocate memory for _chatLogic, 
+    ChatBot &operator=(const ChatBot &source) ;   // SCS 24.09. rule of five -  copy assignment operator, no copy allowed,  because _chatLogic/ChatBot will be constructed recursively
+ //// EOF STUDENT CODE
    
 
 public:
@@ -34,9 +35,25 @@ public:
     ~ChatBot();                    // destructor
     
 
-    //// STUDENT CODE
-    ////
-   ChatBot(ChatBot &&source);      // SCS 24.09. rule of five -  move constructor
+
+ //// STUDENT CODE    
+  
+   ChatBot(ChatBot &&source)        // SCS 24.09. rule of five -  move constructor
+   {
+      std::cout << "ChatBot move constructor: MOVING ChatBot instance " << &source << " to instance " << this << std::endl;
+   
+      if (_image != NULL)
+       	delete _image;
+      _image = std::move(source._image);
+      source._image = NULL;
+     
+      _chatLogic = std::move(source._chatLogic);
+      source._chatLogic = nullptr;
+  
+      _rootNode = std::move(source._rootNode);
+      source._rootNode = nullptr;
+    }
+    
    ChatBot &operator=(ChatBot &&source) { // SCS 24.09. rule of five -  move assignement operator
   
        std::cout << "ChatBot move assignement operator - ASSIGNING content of instance " << &source << " to instance " << this << std::endl;

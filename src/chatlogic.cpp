@@ -27,7 +27,7 @@ ChatLogic::ChatLogic()
  //  ChatBot *doubleBot(_chatBot); // SCS 24.09.  - rule of five - debug help
   
     // test move constructor
- ChatBot *doubleBot(std::move(_chatBot)); // SCS 24.09.  - rule of five - debug help
+ //ChatBot *doubleBot(std::move(_chatBot)); // SCS 24.09.  - rule of five - debug help
 
      // test move assignement operator
   /* ChatBot *doubleBot = new ChatBot("../images/user.png");

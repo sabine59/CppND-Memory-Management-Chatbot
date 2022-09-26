@@ -46,49 +46,14 @@ ChatBot::~ChatBot()
 //// STUDENT CODE
 ////
 
+// SCS 24.09. rule of five -  copy constructor - no copy allowed, because _chatLogic/ChatBot will be constructed recursively
+// SCS 24.09. rule of five -  no copy assignment operator, because _chatLogic/ChatBot will be constructed recursively
+// didn't know, how to allocate memory for _chatLogic without using constructor
 
-   // ChatBot::ChatBot(const ChatBot &source){}    // SCS 24.09. rule of five -  copy constructor - no copy allowed, because _chatLogic will be constructed recursively
-   // ChatBot::ChatBot &operator=(const ChatBot &source){}    // SCS 24.09. rule of five -  copy assignment operatorN because _chatLogic will be constructed recursively
-
-
-     
-ChatBot::ChatBot(ChatBot &&source) // SCS 24.09. rule of five -  move constructor
-    {
-      std::cout << "ChatBot move constructor: MOVING ChatBot instance " << &source << " to instance " << this << std::endl;
-   
-      if (_image != NULL)
-       	delete _image;
-      _image = std::move(source._image);
-      source._image = NULL;
-     
-      _chatLogic = std::move(source._chatLogic);
-      source._chatLogic = nullptr;
-  
-      _rootNode = std::move(source._rootNode);
-      source._rootNode = nullptr;
-    }
-
-  // SCS 24.09. rule of five -  move assignement operator: is implemented in header-file
+// SCS 24.09. rule of five -  move constructor: is implemented in the header file
+// SCS 24.09. rule of five -  move assignement operator: is implemented in header-file, didn't compile here by any reasons
  
-    
-/*
-ChatBot::ChatBot &operator =(ChatBot &&source)   // SCS 24.09. rule of five -  move assignment operator
-    {
-       std::cout << "ChatBot move assignement operator - ASSIGNING content of instance " << &source << " to instance " << this << std::endl;
-        if (this == &source)
-            return *this;
-       delete _image;
-      _image = new wxBitmap(source._image->GetWidth(), source._image->GetHeight(), source._image->GetDepth());
-      *_image  = *source._image;
-      source._image = NULL;
-  
-      _chatLogic = std::move(source._chatLogic);
-      source._chatLogic = nullptr;
-  
-      _rootNode = source._rootNode;
-      source._rootNode = nullptr;
-      return *this;
-    }  */
+
 
 ////
 //// EOF STUDENT CODE
