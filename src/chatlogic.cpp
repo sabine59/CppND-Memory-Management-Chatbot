@@ -170,17 +170,17 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
                         ////
 						std::vector <GraphNode *> _rawNodes {};
                         for (int k=0; k<_nodes.size(); k++) {
-                          _rawNodes.emplace_back(_nodes.back().get());
+                          _rawNodes.emplace(_rawNodes.begin(), _nodes.back().get());
                           _nodes.pop_back();
                         }
                         // check if node with this ID exists already
                          auto newNode = std::find_if(_rawNodes.begin(), _rawNodes.end(),  [&id](GraphNode *node) { return node->GetID() == id;}); // SCS 26.09 task 3: exclusive ownership
                         // create new element if ID does not yet exist
-                      GraphNode *endOfNodes = &*(_nodes.end())->get();
+                        GraphNode *endOfNodes = &*(_nodes.end())->get();
                         if (endOfNodes == *newNode)
                         {
                             _nodes.emplace_back(std::make_unique<GraphNode> (id)); // SCS 26.09 task 3: exclusive ownership
-                            newNode = *(_nodes.end() - 1)->get(); // SCS 26.09 task 3: exclusive ownership // get iterator to last element
+                            newNode =  _rawNodes.end() - 1; // SCS 26.09 task 3: exclusive ownership // get iterator to last element
 					        
                             // add all answers to current node
                             AddAllTokensToElement("ANSWER", tokens, **newNode); // SCS 26.09 task 3: exclusive ownership
