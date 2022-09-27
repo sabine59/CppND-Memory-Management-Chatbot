@@ -17,7 +17,7 @@ private:
     ////
 
     // data handles (owned)
-    std::vector<std::unique_ptr<GraphNode>> _nodes; // SCS 26.09 task 3: exclusive ownership
+    std::vector<std::unique_ptr<GraphNode *>> _nodes; // SCS 26.09 task 3: exclusive ownership
     std::vector<GraphEdge *> _edges;
 
     ////
@@ -35,10 +35,7 @@ private:
     template <typename T>
     void AddAllTokensToElement(std::string tokenID, tokenlist &tokens, T &element);
     
-    
-    template <typename T>  // SCS 26.09.
-    void AddAllTokensToElementNode(std::string tokenID, tokenlist &tokens, T &element);
-
+   
 public:
     // constructor / destructor
     ChatLogic();
