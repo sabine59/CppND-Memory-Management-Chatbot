@@ -34,6 +34,10 @@ private:
     // proprietary functions
     template <typename T>
     void AddAllTokensToElement(std::string tokenID, tokenlist &tokens, T &element);
+    
+    
+    template <typename T>  // SCS 26.09.
+    void AddAllTokensToElementNode(std::string tokenID, tokenlist &tokens, T &element);
 
 public:
     // constructor / destructor

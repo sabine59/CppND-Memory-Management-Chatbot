@@ -58,10 +58,10 @@ ChatLogic::~ChatLogic()
 
     // delete all nodes
   // SCS 26.09 - no delete, because unique pointers are deleted automatically
- /*   for (auto it = std::begin(_nodes); it != std::end(_nodes); ++it)
+/*    for (auto it = std::begin(_nodes); it != std::end(_nodes); ++it)
     {
         delete *it;
-    } */ 
+    }  */
 
     // delete all edges
     for (auto it = std::begin(_edges); it != std::end(_edges); ++it)
@@ -92,6 +92,27 @@ void ChatLogic::AddAllTokensToElement(std::string tokenID, tokenlist &tokens, T 
         }
     }
 }
+
+template <typename T> // SCS 26.09
+void ChatLogic::AddAllTokensToElementNode(std::string tokenID, tokenlist &tokens, T &element)
+{
+    // find all occurences for current node
+    auto token = tokens.begin();
+    while (true)
+    {
+        token = std::find_if(token, tokens.end(), [&tokenID](const std::pair<std::string, std::string> &pair) { return pair.first == tokenID;; });
+        if (token != tokens.end())
+        {
+            element.AddToken(token->second); // add new keyword to edge
+            token++;                         // increment iterator to next element
+        }
+        else
+        {
+            break; // quit infinite while-loop
+        }
+    }
+}
+
 
 void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
 {
@@ -147,18 +168,22 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
                     {
                         //// STUDENT CODE
                         ////
-
+						std::vector <GraphNode *> _rawNodes {};
+                        for (int k=0; k<_nodes.size(); k++) {
+                          _rawNodes.emplace_back(_nodes.back().get());
+                          _nodes.pop_back();
+                        }
                         // check if node with this ID exists already
-                        auto newNode_unique = std::find_if(_nodes.begin(), _nodes.end(),  [&id](GraphNode *node) { return node->GetID() == id; }); // SCS 26.09 task 3: exclusive ownership
-						GraphNode *newNode; // SCS 26.09 task 3: exclusive ownership
+                         auto newNode = std::find_if(_rawNodes.begin(), _rawNodes.end(),  [&id](GraphNode *node) { return node->GetID() == id;}); // SCS 26.09 task 3: exclusive ownership
                         // create new element if ID does not yet exist
-                        if (newNode_unique == _nodes.end())
+                      GraphNode *endOfNodes = &*(_nodes.end())->get();
+                        if (endOfNodes == *newNode)
                         {
-                            _nodes.push_back(std::make_unique<GraphNode> (id)); // SCS 26.09 task 3: exclusive ownership
-                            newNode_unique = _nodes.end() - 1; // SCS 26.09 task 3: exclusive ownership // get iterator to last element
+                            _nodes.emplace_back(std::make_unique<GraphNode> (id)); // SCS 26.09 task 3: exclusive ownership
+                            newNode = *(_nodes.end() - 1)->get(); // SCS 26.09 task 3: exclusive ownership // get iterator to last element
 					        
                             // add all answers to current node
-                            AddAllTokensToElement("ANSWER", tokens, *(*newNode_unique).get()); // SCS 26.09 task 3: exclusive ownership
+                            AddAllTokensToElement("ANSWER", tokens, **newNode); // SCS 26.09 task 3: exclusive ownership
                         }
 
                         ////
@@ -178,21 +203,21 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
                         if (parentToken != tokens.end() && childToken != tokens.end())
                         {
                             // get iterator on incoming and outgoing node via ID search
-                            auto parentNode = std::find_if(_nodes.begin(), _nodes.end(), [&parentToken](GraphNode *node) { return node->GetID() == std::stoi(parentToken->second); });
-                            auto childNode = std::find_if(_nodes.begin(), _nodes.end(), [&childToken](GraphNode *node) { return node->GetID() == std::stoi(childToken->second); });
+                          //  auto parentNode = std::find_if(_nodes.begin(), _nodes.end(), [&parentToken](auto node) { return node->GetID() == std::stoi(parentToken->second); }); // SCS 26.09 task 3: exclusive ownership
+                          //  auto childNode = std::find_if(_nodes.begin(), _nodes.end(), [&childToken](auto node) { return node->GetID() == std::stoi(childToken->second); }); // SCS 26.09 task 3: exclusive ownership
 
                             // create new edge
                             GraphEdge *edge = new GraphEdge(id);
-                            edge->SetChildNode(childNode->get()); // SCS 26.09 task 3: exclusive ownership
-                            edge->SetParentNode(parentNode->get()); // SCS 26.09 task 3: exclusive ownership
+                        //    edge->SetChildNode(childNode->get()); // SCS 26.09 task 3: exclusive ownership
+                        //    edge->SetParentNode(parentNode->get()); // SCS 26.09 task 3: exclusive ownership
                             _edges.push_back(edge);
 
                             // find all keywords for current node
                             AddAllTokensToElement("KEYWORD", tokens, *edge);
 
                             // store reference in child node and parent node
-                            (*childNode)->AddEdgeToParentNode(edge);
-                            (*parentNode)->AddEdgeToChildNode(edge);
+                       //    (*childNode)->AddEdgeToParentNode(edge);
+                       //    (*parentNode)->AddEdgeToChildNode(edge);
                         }
 
                         ////
