@@ -21,7 +21,7 @@ private:
 public:
     // constructor / desctructor
     GraphEdge(int id);
-    ~GraphEdge(); // SCS 22.09.
+    ~GraphEdge(); 
   
 
     // getter / setter

@@ -25,7 +25,7 @@ private:
 
     // data handles (not owned)
     GraphNode *_currentNode;
-    std::shared_ptr <ChatBot *> _chatBot;
+    ChatBot * _chatBot = nullptr;
     ChatBotPanelDialog *_panelDialog;
 
     // proprietary type definitions
@@ -43,7 +43,7 @@ public:
 
     // getter / setter
     void SetPanelDialogHandle(ChatBotPanelDialog *panelDialog);
-    void SetChatbotHandle(std::shared_ptr<ChatBot*> chatbot);
+    void SetChatbotHandle(ChatBot* chatbot);
 
     // proprietary functions
     void LoadAnswerGraphFromFile(std::string filename);

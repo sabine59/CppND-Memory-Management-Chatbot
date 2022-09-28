@@ -23,8 +23,8 @@ private:
     int ComputeLevenshteinDistance(std::string s1, std::string s2);
     
      //// STUDENT CODE
-    ChatBot(const ChatBot &source);     // SCS 24.09. rule of five -  copy constructor, no copy allowed, because cannot allocate memory for _chatLogic, 
-    ChatBot &operator=(const ChatBot &source) ;   // SCS 24.09. rule of five -  copy assignment operator, no copy allowed,  because _chatLogic/ChatBot will be constructed recursively
+    ChatBot(const ChatBot &source);               // SCS 24.09. rule of five -  copy constructor, no copy allowed, _chatLogic/ChatBot will be constructed recursively 
+    ChatBot &operator=(const ChatBot &source) ;   // SCS 24.09. rule of five -  copy assignment operator, no copy allowed, dito
  //// EOF STUDENT CODE
    
 
@@ -40,7 +40,7 @@ public:
   
    ChatBot(ChatBot &&source)        // SCS 24.09. rule of five -  move constructor
    {
-      std::cout << "ChatBot move constructor: MOVING ChatBot instance " << &source << " to instance " << this << std::endl;
+      std::cout << "ChatBot move constructor is called "<< std::endl;
    
       if (_image != NULL)
        	delete _image;
@@ -56,7 +56,7 @@ public:
     
    ChatBot &operator=(ChatBot &&source) { // SCS 24.09. rule of five -  move assignement operator
   
-       std::cout << "ChatBot move assignement operator - ASSIGNING content of instance " << &source << " to instance " << this << std::endl;
+       std::cout << "ChatBot move assignement operator is called " << this << std::endl;
      
       if (_image != NULL)
        	delete _image;
@@ -78,7 +78,6 @@ public:
     void SetCurrentNode(GraphNode *node);
     void SetRootNode(GraphNode *rootNode) { _rootNode = rootNode; }
     void SetChatLogicHandle(ChatLogic *chatLogic) { 
-  std::cout << "SetChatLogicHandle: "<<std::endl; // SCS debug_chatLogic = chatLogic;
   _chatLogic = chatLogic;}
     ChatLogic* GetChatLogicHandle() { return _chatLogic; }
     wxBitmap *GetImageHandle() { return _image; }

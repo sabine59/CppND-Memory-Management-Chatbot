@@ -28,10 +28,7 @@ public:
     ~ChatBotPanelDialog();
 
     // getter / setter
-    ChatLogic *GetChatLogicHandle() { 
-    
-       std::cout << "ChatBotPanelDialog: GetChatLogicHandle: " << _chatLogic.get() << std::endl; // SCS debug
-       return _chatLogic.get(); } // SCS 24.09. - implementing unique_ptr
+    ChatLogic *GetChatLogicHandle() { return _chatLogic.get(); } // SCS 24.09. - implementing unique_ptr
 
     // events
     void paintEvent(wxPaintEvent &evt);
@@ -73,19 +70,19 @@ private:
 public:
     // constructor / desctructor
     ChatBotFrame(const wxString &title);
-    ~ChatBotFrame(); // SCS 22.09.
+    ~ChatBotFrame(); 
 };
 
 // control panel for background image display
 class ChatBotFrameImagePanel : public wxPanel
 {
     // control elements
-    wxBitmap _image; // SCS 22.09.
+    wxBitmap _image; 
 
 public:
     // constructor / desctructor
     ChatBotFrameImagePanel(wxFrame *parent);
-    ~ChatBotFrameImagePanel(); // SCS 22.09.
+    ~ChatBotFrameImagePanel(); 
 
     // events
     void paintEvent(wxPaintEvent &evt);

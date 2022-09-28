@@ -11,6 +11,7 @@
 // constructor WITHOUT memory allocation
 ChatBot::ChatBot()
 {
+  std::cout << "ChatBot Constructor" << std::endl;
     // invalidate data handles
     _image = nullptr;
     _chatLogic = nullptr;
@@ -48,7 +49,6 @@ ChatBot::~ChatBot()
 
 // SCS 24.09. rule of five -  copy constructor - no copy allowed, because _chatLogic/ChatBot will be constructed recursively
 // SCS 24.09. rule of five -  no copy assignment operator, because _chatLogic/ChatBot will be constructed recursively
-// didn't know, how to allocate memory for _chatLogic without using constructor
 
 // SCS 24.09. rule of five -  move constructor: is implemented in the header file
 // SCS 24.09. rule of five -  move assignement operator: is implemented in header-file, didn't compile here by any reasons
@@ -61,7 +61,6 @@ ChatBot::~ChatBot()
 void ChatBot::ReceiveMessageFromUser(std::string message)
 {
   
-       std::cout << "ChatBot:ReceiveMessageFromUser message:"<< message << std::endl; // SCS debug
     // loop over all edges and keywords and compute Levenshtein distance to query
     typedef std::pair<GraphEdge *, int> EdgeDist;
     std::vector<EdgeDist> levDists; // format is <ptr,levDist>

@@ -3,27 +3,13 @@
 
 #include<iostream> // SCS debug
 
-GraphNode::GraphNode(int id)
-{
-    _id = id;
-}
+GraphNode::GraphNode(int id) { _id = id; }
 
 GraphNode::~GraphNode()
 {
     //// STUDENT CODE
     ////
-
-   std::cout << "GraphNode destructor is called " <<std::endl; // SCS debug
-/*   if (_chatBot != nullptr) {  // SCS 22.09.
-         //std::cout << "GraphNode destructor is called: " << _chatBot<< " " << std::endl; // SCS debug
-
-
-     delete _chatBot; 
-     _chatBot = nullptr;
-    } else {
-
-         //std::cout << "GraphNode destructor is called: _chatBot = nullptr " << std::endl; // SCS debug
-    } */
+   
 
     ////
     //// EOF STUDENT CODE
@@ -47,24 +33,21 @@ void GraphNode::AddEdgeToChildNode(std::shared_ptr<GraphEdge *>edge)
 
 //// STUDENT CODE
 ////
-void GraphNode::MoveChatbotHere(std::shared_ptr <ChatBot *> chatbot)
+void GraphNode::MoveChatbotHere(std::shared_ptr <ChatBot *>  chatbot)
 {
    
-      
-    (*chatbot)->SetCurrentNode(this);  
     this->_chatBot = chatbot;
+    (*chatbot)->SetCurrentNode(this);  
+    
 
-    std::cout << "MoveChatBotHere: " << _chatBot<< " " << std::endl; // SCS debug
-    //this->_chatBot->SetCurrentNode(this);
 }
 
 void GraphNode::MoveChatbotToNewNode(GraphNode *newNode)
 {
 
-         std::cout << "MoveChatBotToNewNode: " << newNode->_chatBot << " " << std::endl; // SCS debug
     newNode->MoveChatbotHere(_chatBot);
 
-    _chatBot = nullptr; // invalidate pointer at source
+    _chatBot = std::move(nullptr); // call move assignement operator to invalidate _chatbot after movement
 }
 ////
 //// EOF STUDENT CODE

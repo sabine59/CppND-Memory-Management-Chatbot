@@ -4,15 +4,9 @@
 
 #include<iostream> // SCS 22.09.
 
-GraphEdge::GraphEdge(int id)
-{
-       //std::cout << "GraphEdge constructor is called " <<std::endl; // SCS debug
-    _id = id;
-}
+GraphEdge::GraphEdge(int id) { _id = id; }
 
-GraphEdge::~GraphEdge() { // SCS 22.09.
-   //std::cout << "GraphEdge destructor is called " <<std::endl; // SCS debug
-}
+GraphEdge::~GraphEdge() {}
 
 void GraphEdge::SetChildNode(GraphNode *childNode)
 {

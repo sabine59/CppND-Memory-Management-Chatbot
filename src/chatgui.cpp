@@ -30,7 +30,6 @@ bool ChatBotApp::OnInit()
 // wxWidgets FRAME
 ChatBotFrame::ChatBotFrame(const wxString &title) : wxFrame(NULL, wxID_ANY, title, wxDefaultPosition, wxSize(width, height))
 {
-    std::cout << "ChatBotFrame constructor is called " <<std::endl; // SCS debug
     // create panel with background image
     ChatBotFrameImagePanel *ctrlPanel = new ChatBotFrameImagePanel(this);
 
@@ -54,16 +53,11 @@ ChatBotFrame::ChatBotFrame(const wxString &title) : wxFrame(NULL, wxID_ANY, titl
 }
 
 ChatBotFrame::~ChatBotFrame() { // SCS 22.09.
-   std::cout << "ChatBotFrame destructor is called " <<std::endl; // SCS debug
     if (_panelDialog != NULL) {
-      
-   std::cout << "ChatBotFrame destructor _panelDialog deleted" <<std::endl; // SCS debug
         delete _panelDialog;
         _panelDialog = NULL;
     }
       if (_userTextCtrl  != NULL) {
-        
-   std::cout << "ChatBotFrame destructor _userText deleted" <<std::endl; // SCS debug
         delete _userTextCtrl ;
         _userTextCtrl = NULL;
     }
@@ -72,42 +66,26 @@ ChatBotFrame::~ChatBotFrame() { // SCS 22.09.
 void ChatBotFrame::OnEnter(wxCommandEvent &WXUNUSED(event))
 {
   
-       std::cout << "OnEnter Start " << std::endl; // SCS debug
     // retrieve text from text control
     wxString userText = _userTextCtrl->GetLineText(0);
 
-       std::cout << "OnEnter UserText: " << userText << std::endl; // SCS debug
     // add new user text to dialog
     _panelDialog->AddDialogItem(userText, true);
 
-       std::cout << "OnEnter AddDialogItem" << std::endl; // SCS debug
     // delete text in text control
     _userTextCtrl->Clear();
 
-       std::cout << "OnEnter UserTextCtrl->Clear() " << userText << std::endl; // SCS debug
     // send user text to chatbot 
     _panelDialog->GetChatLogicHandle()->SendMessageToChatbot(std::string(userText.mb_str())); 
-  
-       std::cout << "OnEnter End " << std::endl; // SCS debug
 }
 
 BEGIN_EVENT_TABLE(ChatBotFrameImagePanel, wxPanel)
 EVT_PAINT(ChatBotFrameImagePanel::paintEvent) // catch paint events
 END_EVENT_TABLE()
 
-ChatBotFrameImagePanel::ChatBotFrameImagePanel(wxFrame *parent) : wxPanel(parent)
+ChatBotFrameImagePanel::ChatBotFrameImagePanel(wxFrame *parent) : wxPanel(parent) {}
 
-{
-       std::cout << "ChatBotFrameImagePanel constructor is called " <<std::endl; // SCS debug
-
-
-}
-
-ChatBotFrameImagePanel::~ChatBotFrameImagePanel() // SCS 22.09.
-{
-       std::cout << "ChatBotFrameImagePanel destructor is called " <<std::endl; // SCS debug
-   
-}
+ChatBotFrameImagePanel::~ChatBotFrameImagePanel() {}
 
 
 void ChatBotFrameImagePanel::paintEvent(wxPaintEvent &evt)
@@ -144,20 +122,14 @@ END_EVENT_TABLE()
 ChatBotPanelDialog::ChatBotPanelDialog(wxWindow *parent, wxWindowID id)
     : wxScrolledWindow(parent, id)
 {
-    std::cout << "ChatBotPanelDialog constructor is called \r\n"; // SCS debug
-
     // sizer will take care of determining the needed scroll size
     _dialogSizer = new wxBoxSizer(wxVERTICAL);
-          std::cout << "ChatBotPanelDialog: got _dialogSizer \r\n";// SCS debug
-
 
     this->SetSizer(_dialogSizer);
-//    std::cout << "ChatBotPanelDialog: set _dialogSizer \r\n"; // SCS debug
 
 
     // allow for PNG images to be handled
     wxInitAllImageHandlers();
- //   std::cout << "ChatBotPanelDialog ImageHandler initialized \r\n";// SCS debug
 
 
     //// STUDENT CODE
@@ -165,18 +137,13 @@ ChatBotPanelDialog::ChatBotPanelDialog(wxWindow *parent, wxWindowID id)
 
     // create chat logic instance
     _chatLogic = std::make_unique<ChatLogic>();  // SCS 24.09 - implementing unique_ptr
-  //  std::cout << "ChatBotPanelDialog: new _chatlogic instance \r\n"; // SCS debug
-
 
     // pass pointer to chatbot dialog so answers can be displayed in GUI
     _chatLogic->SetPanelDialogHandle(this);
-  //  std::cout << "ChatBotPanelDialog SetPanelDialogHandle \r\n"; // SCS debug
 
 
     // load answer graph from file
     _chatLogic->LoadAnswerGraphFromFile(dataPath + "src/answergraph.txt");
-    std::cout << "ChatBotPanelDialog: LoadAnswerGraph from File \r\n"; // SCS debug 
-
 
     ////
     //// EOF STUDENT CODE
@@ -186,9 +153,8 @@ ChatBotPanelDialog::~ChatBotPanelDialog()
 {
     //// STUDENT CODE
     ////
-    std::cout << "ChatBotPanelDialog destructor is called " <<std::endl; // SCS debug
-
-
+    // _chatLogic smartpointer is deleted automatically
+   
     ////
     //// EOF STUDENT CODE
 }
@@ -196,7 +162,6 @@ ChatBotPanelDialog::~ChatBotPanelDialog()
 void ChatBotPanelDialog::AddDialogItem(wxString text, bool isFromUser)
 {
   
-       std::cout << "AddDialogItem Start" << text << std::endl; // SCS debug
     // add a single dialog element to the sizer
     ChatBotPanelDialogItem *item = new ChatBotPanelDialogItem(this, text, isFromUser);
     _dialogSizer->Add(item, 0, wxALL | (isFromUser == true ? wxALIGN_LEFT : wxALIGN_RIGHT), 8);
@@ -213,14 +178,12 @@ void ChatBotPanelDialog::AddDialogItem(wxString text, bool isFromUser)
     int sy = dy * this->GetScrollLines(wxVERTICAL);
     this->DoScroll(0, sy);
   
-       std::cout << "AddDialogItem End " << text << std::endl; // SCS debug
 }
 
 
 void ChatBotPanelDialog::PrintChatbotResponse(std::string response)
 {
   
-       std::cout << "PrintChatbotResponse: " << response << std::endl; // SCS debug
     // convert string into wxString and add dialog element
     wxString botText(response.c_str(), wxConvUTF8);
     AddDialogItem(botText, false);
@@ -253,7 +216,6 @@ void ChatBotPanelDialog::render(wxDC &dc)
 ChatBotPanelDialogItem::ChatBotPanelDialogItem(wxPanel *parent, wxString text, bool isFromUser)
     : wxPanel(parent, -1, wxPoint(-1, -1), wxSize(-1, -1), wxBORDER_NONE)
 {
-       std::cout << "ChatBotPanelDialogItem constructor is called " <<std::endl; // SCS debug
     // retrieve image from chatbot
     wxBitmap *bitmap = isFromUser == true ? nullptr : ((ChatBotPanelDialog*)parent)->GetChatLogicHandle()->GetImageFromChatbot(); 
 
@@ -278,23 +240,16 @@ ChatBotPanelDialogItem::ChatBotPanelDialogItem(wxPanel *parent, wxString text, b
 }
 
 ChatBotPanelDialogItem::~ChatBotPanelDialogItem() { //SCS 22.09.
-   std::cout << "ChatBotPanelDialogItem destructor is called " <<std::endl; // SCS debug
     if (_chatBotImg != NULL) {
 
-   std::cout << "ChatBotPanelDialogItem _image " << _chatBotImg << " "<<std::endl; // SCS debug
         delete _chatBotImg;
         _chatBotImg = NULL;
     } else {
 
-   std::cout << "ChatBotPanelDialogItem _image = nullptr " <<std::endl; // SCS debug
     }
     if (_chatBotTxt != NULL) {
 
-   std::cout << "ChatBotPanelDialogItem _txt " << _chatBotTxt << " "<<std::endl; // SCS debug
         delete _chatBotTxt;
         _chatBotTxt = NULL;
-    } else {
-
-   std::cout << "ChatBotPanelDialogItem _txt = nullptr " <<std::endl; // SCS debug
-    }
+    } 
 }
