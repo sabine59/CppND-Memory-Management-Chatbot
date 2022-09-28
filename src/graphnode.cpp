@@ -14,7 +14,7 @@ GraphNode::~GraphNode()
     ////
 
    std::cout << "GraphNode destructor is called " <<std::endl; // SCS debug
-   if (_chatBot != nullptr) {  // SCS 22.09.
+/*   if (_chatBot != nullptr) {  // SCS 22.09.
          //std::cout << "GraphNode destructor is called: " << _chatBot<< " " << std::endl; // SCS debug
 
 
@@ -23,7 +23,7 @@ GraphNode::~GraphNode()
     } else {
 
          //std::cout << "GraphNode destructor is called: _chatBot = nullptr " << std::endl; // SCS debug
-    }
+    } */
 
     ////
     //// EOF STUDENT CODE
@@ -47,12 +47,15 @@ void GraphNode::AddEdgeToChildNode(std::shared_ptr<GraphEdge *>edge)
 
 //// STUDENT CODE
 ////
-void GraphNode::MoveChatbotHere(ChatBot * chatbot)
+void GraphNode::MoveChatbotHere(std::shared_ptr <ChatBot *> chatbot)
 {
+   
+      
+    (*chatbot)->SetCurrentNode(this);  
     this->_chatBot = chatbot;
 
-         std::cout << "MoveChatBotHere: " << _chatBot<< " " << std::endl; // SCS debug
-    this->_chatBot->SetCurrentNode(this);
+    std::cout << "MoveChatBotHere: " << _chatBot<< " " << std::endl; // SCS debug
+    //this->_chatBot->SetCurrentNode(this);
 }
 
 void GraphNode::MoveChatbotToNewNode(GraphNode *newNode)

@@ -19,7 +19,7 @@ ChatLogic::ChatLogic()
 
        std::cout << "ChatLogic constructor is called " <<std::endl; // SCS debug
     // create instance of chatbot
-  _chatBot = new ChatBot("../images/chatbot.png");
+  _chatBot = std::make_shared<ChatBot *> (new ChatBot("../images/chatbot.png"));
   std::cout << "_chatBot at: "<< _chatBot <<std::endl; // SCS debug
 
 
@@ -39,7 +39,7 @@ ChatLogic::ChatLogic()
 
     // add pointer to chatlogic so that chatbot answers can be passed on to the GUI
  //   _chatBot->SetChatLogicHandle(this);
-_chatBot->SetChatLogicHandle(this);
+(*_chatBot)->SetChatLogicHandle(this);
     ////
     //// EOF STUDENT CODE
 }
@@ -272,8 +272,9 @@ std::cout << "ChatLogic::LoadAnswerGraphFromFile *endOfNodes = &*(_nodes.end())-
     }
 
     // add chatbot to graph root node
-    _chatBot->SetRootNode(rootNode);
-    rootNode->MoveChatbotHere(_chatBot);
+    (*_chatBot)->SetRootNode(rootNode);
+    std::shared_ptr<ChatBot *> movingChatBot = _chatBot;
+    rootNode->MoveChatbotHere(movingChatBot);
     //_chatBot = nullptr;  // SCS 22.09.
     
     ////
@@ -287,7 +288,7 @@ void ChatLogic::SetPanelDialogHandle(ChatBotPanelDialog *panelDialog)
     _panelDialog = panelDialog;
 }
 
-void ChatLogic::SetChatbotHandle(ChatBot *chatbot)
+void ChatLogic::SetChatbotHandle(std::shared_ptr<ChatBot *>chatbot)
 {
   
        std::cout << "ChatLogic:SetChatbotHandle "<< std::endl; // SCS debug
@@ -298,7 +299,7 @@ void ChatLogic::SendMessageToChatbot(std::string message)
 {
   
        std::cout << "ChatLogic:SendMessageToChatBot _chatBot: "<< _chatBot << std::endl; // SCS debug
-    _chatBot->ReceiveMessageFromUser(message);
+    (*_chatBot)->ReceiveMessageFromUser(message);
 }
 
 void ChatLogic::SendMessageToUser(std::string message)
@@ -313,5 +314,5 @@ void ChatLogic::SendMessageToUser(std::string message)
 
 wxBitmap *ChatLogic::GetImageFromChatbot()
 {
-    return _chatBot->GetImageHandle();
+    return (*_chatBot)->GetImageHandle();
 }
