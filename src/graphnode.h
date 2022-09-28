@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <memory>   //SCS 28.09. task 4
 #include "chatbot.h"
 
 
@@ -16,10 +17,10 @@ private:
     ////
 
     // data handles (owned)
-    std::vector<GraphEdge *> _childEdges;  // edges to subsequent nodes
+    std::vector<std::unique_ptr <GraphEdge *>> _childEdges;  // SCS 28.09. Task 4: moving smartpinters - edges to subsequent nodes
 
     // data handles (not owned)
-    std::vector<GraphEdge *> _parentEdges; // edges to preceding nodes 
+    std::vector<std::shared_ptr <GraphEdge *>> _parentEdges; // SCS 28.09. Task 4: moving smartpinters - edges to preceding nodes 
     ChatBot *_chatBot= nullptr; // SCS 22.09. - none initialization here causes an error 
 
     ////
@@ -43,8 +44,8 @@ public:
 
     // proprietary functions
     void AddToken(std::string token); // add answers to list
-    void AddEdgeToParentNode(GraphEdge *edge);
-    void AddEdgeToChildNode(GraphEdge *edge);
+    void AddEdgeToParentNode(std::shared_ptr <GraphEdge *>edge);
+    void AddEdgeToChildNode(std::shared_ptr <GraphEdge *>edge);
 
     //// STUDENT CODE
     ////

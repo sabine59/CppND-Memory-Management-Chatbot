@@ -65,10 +65,10 @@ ChatLogic::~ChatLogic()
     }  */
 
     // delete all edges
-    for (auto it = std::begin(_edges); it != std::end(_edges); ++it)
+/*    for (auto it = std::begin(_edges); it != std::end(_edges); ++it) // SCS 28.09. task 4
     {
         delete *it;
-    }
+    } */
 
     ////
     //// EOF STUDENT CODE
@@ -212,22 +212,25 @@ std::cout << "ChatLogic::LoadAnswerGraphFromFile *endOfNodes = &*(_nodes.end())-
                           auto childNode = std::find_if(_rawNodes.begin(), _rawNodes.end(), [&childToken](auto node) { return node->GetID() == std::stoi(childToken->second); }); // SCS 26.09 task 3: exclusive ownership
 
                             // create new edge
-                           GraphEdge *edge = new GraphEdge(id);
-                           edge->SetChildNode(*childNode); // SCS 26.09 task 3: exclusive ownership
-                           edge->SetParentNode(*parentNode); // SCS 26.09 task 3: exclusive ownership
-                           _edges.push_back(edge);
+                           GraphEdge * edge = new GraphEdge(id);
+                           edge->SetChildNode(*childNode); // SCS 28.09 task 4:
+                           edge->SetParentNode(*parentNode); // SCS 28.09 task 4:
+                           _edges.push_back(std::make_shared <GraphEdge *> (edge));
 
                             // find all keywords for current node
                             AddAllTokensToElement("KEYWORD", tokens, *edge);
-
+							std::shared_ptr<GraphEdge *> nodesEdge = std::make_shared <GraphEdge *> (edge);
+                          
                             // store reference in child node and parent node
-                           (*childNode)->AddEdgeToParentNode(edge);
-                           (*parentNode)->AddEdgeToChildNode(edge);
+                           (*childNode)->AddEdgeToParentNode(nodesEdge);
+                          
+                           (*parentNode)->AddEdgeToChildNode(std::move(nodesEdge));
                         }
 
                         ////
                         //// EOF STUDENT CODE
                     }
+               
                 }
                 else
                 {

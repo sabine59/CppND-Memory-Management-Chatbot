@@ -63,6 +63,8 @@ vector
 -
 string
 -
+memory
+-
 chatbot.h
 /home/workspace/CppND-Memory-Management-Chatbot/src/chatbot.h
 
