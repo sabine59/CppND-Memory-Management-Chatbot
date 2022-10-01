@@ -47,13 +47,11 @@ ChatBot::~ChatBot()
 //// STUDENT CODE
 ////
 
-// SCS 24.09. rule of five -  copy constructor - no copy allowed, because _chatLogic/ChatBot will be constructed recursively
-// SCS 24.09. rule of five -  no copy assignment operator, because _chatLogic/ChatBot will be constructed recursively
-
+// SCS 01.10. rule of five -  copy constructor is implemented in the header file
+// SCS 01.10. rule of five -  no copy assignment operatoris is implemented in the header file
 // SCS 24.09. rule of five -  move constructor: is implemented in the header file
 // SCS 24.09. rule of five -  move assignement operator: is implemented in header-file, didn't compile here by any reasons
  
-
 
 ////
 //// EOF STUDENT CODE

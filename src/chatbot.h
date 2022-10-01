@@ -22,10 +22,7 @@ private:
     // proprietary functions
     int ComputeLevenshteinDistance(std::string s1, std::string s2);
     
-     //// STUDENT CODE
-    ChatBot(const ChatBot &source);               // SCS 24.09. rule of five -  copy constructor, no copy allowed, _chatLogic/ChatBot will be constructed recursively 
-    ChatBot &operator=(const ChatBot &source) ;   // SCS 24.09. rule of five -  copy assignment operator, no copy allowed, dito
- //// EOF STUDENT CODE
+ 
    
 
 public:
@@ -37,7 +34,31 @@ public:
 
 
  //// STUDENT CODE    
-  
+     ChatBot(const ChatBot &source)  // SCS 01.10. rule of five - copy constructor
+    {
+    
+        std::cout << "ChatBot copy constructor " <<std::endl;
+      // allocate memory according to the source image size
+      _image = new wxBitmap(source._image->GetWidth(), source._image->GetHeight(), source._image->GetDepth());  
+      *_image  = *source._image;      // deep copy of the image
+      _chatLogic = source._chatLogic; // copy just the handle, because ChatLogic/Chatbot constructs recursively
+      _rootNode = source._rootNode;   // copy just the handle
+    }
+
+
+    ChatBot &operator=(ChatBot &source)  // SCS 01.10. rule of five - copy assignement operator
+    {
+    
+        std::cout << "ChatBot copy assignement operaot " <<std::endl;
+      // allocate memory according to the source image size
+      _image = new wxBitmap(source._image->GetWidth(), source._image->GetHeight(), source._image->GetDepth()); 
+      *_image  = *source._image;      // deep copy of the image
+      _chatLogic = source._chatLogic; // copy just the handle, because ChatLogic/Chatbot constructs recursively
+      _rootNode = source._rootNode;   // copy just the handle
+      return *this;
+    }
+
+    
    ChatBot(ChatBot &&source)        // SCS 24.09. rule of five -  move constructor
    {
       std::cout << "ChatBot move constructor is called "<< std::endl;
