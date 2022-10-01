@@ -44,8 +44,8 @@ public:
 
     // proprietary functions
     void AddToken(std::string token); // add answers to list
-    void AddEdgeToParentNode(std::shared_ptr <GraphEdge *>edge);
-    void AddEdgeToChildNode(std::shared_ptr <GraphEdge *>edge);
+    void AddEdgeToParentNode(GraphEdge * edge);
+    void AddEdgeToChildNode(GraphEdge * edge);
 
     //// STUDENT CODE
     ////

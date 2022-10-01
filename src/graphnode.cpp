@@ -20,15 +20,14 @@ void GraphNode::AddToken(std::string token)
     _answers.push_back(token);
 }
 
-void GraphNode::AddEdgeToParentNode(std::shared_ptr<GraphEdge *>edge)
+void GraphNode::AddEdgeToParentNode(GraphEdge * edge)
 {
-    _parentEdges.push_back(edge);
+    _parentEdges.push_back(std::make_shared <GraphEdge *> (edge));
 }
 
-void GraphNode::AddEdgeToChildNode(std::shared_ptr<GraphEdge *>edge)
+void GraphNode::AddEdgeToChildNode(GraphEdge * edge)
 {
-    GraphEdge *childRawPointer = *edge.get();
-    _childEdges.push_back(std::make_unique <GraphEdge*> (childRawPointer));
+    _childEdges.push_back(std::move(std::make_unique <GraphEdge*> (edge)));
 }
 
 //// STUDENT CODE

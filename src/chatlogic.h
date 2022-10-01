@@ -18,7 +18,7 @@ private:
 
     // data handles (owned)
     std::vector<std::unique_ptr<GraphNode *>> _nodes; // SCS 26.09 task 3: exclusive ownership
-    std::vector<std::shared_ptr<GraphEdge *>> _edges;
+    std::vector<std::unique_ptr<GraphEdge *>> _edges;
 
     ////
     //// EOF STUDENT CODE

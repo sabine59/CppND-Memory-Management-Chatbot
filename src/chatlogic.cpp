@@ -31,7 +31,8 @@ ChatLogic::~ChatLogic()
     //// STUDENT CODE
     ////
 
- 
+ 	// the owned smartpointers are deleted automatically,
+    // the other pointers are not owned
 
     ////
     //// EOF STUDENT CODE
@@ -161,15 +162,16 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
                            GraphEdge * edge = new GraphEdge(id);
                            edge->SetChildNode(*childNode); 
                            edge->SetParentNode(*parentNode); 
-                           _edges.push_back(std::make_shared <GraphEdge *> (edge)); // SCS 28.09 task 4:
 
                             // find all keywords for current node
                             AddAllTokensToElement("KEYWORD", tokens, *edge);
-							std::shared_ptr<GraphEdge *> nodesEdge = std::make_shared <GraphEdge *> (edge); // SCS 28.09 task 4:
+							GraphEdge * nodesEdge = edge; 
                           
                             // store reference in child node and parent node
                            (*childNode)->AddEdgeToParentNode(nodesEdge);
-                           (*parentNode)->AddEdgeToChildNode(std::move(nodesEdge));
+                           (*parentNode)->AddEdgeToChildNode(nodesEdge);
+                          
+                           _edges.emplace_back(std::move(std::make_unique <GraphEdge *> (edge))); 
                         }
 
                         ////
