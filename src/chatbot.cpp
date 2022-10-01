@@ -46,10 +46,10 @@ ChatBot::~ChatBot()
 //// STUDENT CODE
 ////
 
-// SCS 01.10. rule of five -  copy constructor is implemented in the header file
-// SCS 01.10. rule of five -  copy assignment operator is is implemented in the header file
+// SCS 01.10. rule of five -  copy constructor: is implemented in the header file
+// SCS 01.10. rule of five -  copy assignment: operator is is implemented in the header file
 // SCS 24.09. rule of five -  move constructor: is implemented in the header file
-// SCS 24.09. rule of five -  move assignement operator: is implemented in header-file, didn't compile here by any reasons
+// SCS 24.09. rule of five -  move assignement operator: is implemented in header-file,
 
 ////
 //// EOF STUDENT CODE
