@@ -29,10 +29,10 @@
 
 <TYPE:EDGE><ID:2><PARENT:1><CHILD:3><KEYWORD:unique pointer><KEYWORD:shared pointer><KEYWORD:weak pointer>
 <TYPE:EDGE><ID:3><PARENT:1><CHILD:4><KEYWORD:NULL><KEYWORD:null pointer><KEYWORD:nullptr>
-<TYPE:EDGE><ID:8><PARENT:0><CHILD:9><KEYWORD:Bye now><KEYWORD:See you><KEYWORD:bye><KEYWORD:Bye>
+<TYPE:EDGE><ID:8><PARENT:0><CHILD:9><KEYWORD:Bye now><KEYWORD:See you><KEYWORD:bye>
 
 <TYPE:EDGE><ID:4><PARENT:2><CHILD:5><KEYWORD:stack><KEYWORD:stack memory><KEYWORD:local variable storage>
 <TYPE:EDGE><ID:5><PARENT:2><CHILD:6><KEYWORD:heap><KEYWORD:heap memory><KEYWORD:dynamic storage>
 <TYPE:EDGE><ID:6><PARENT:2><CHILD:7><KEYWORD:static><KEYWORD:static memory><KEYWORD:global variable storage>
 
-<TYPE:EDGE><ID:9><PARENT:0><CHILD:10><KEYWORD:Done><KEYWORD:Ready><KEYWORD:bye><KEYWORD:Bye>
+<TYPE:EDGE><ID:9><PARENT:0><CHILD:10><KEYWORD:Done><KEYWORD:Ready><KEYWORD:bye bye><KEYWORD:Bye bye>
