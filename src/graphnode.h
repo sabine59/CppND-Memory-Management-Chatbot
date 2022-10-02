@@ -17,10 +17,10 @@ private:
     ////
 
     // data handles (owned)
-    std::vector<std::unique_ptr <GraphEdge *>> _childEdges;  // SCS 28.09. Task 4: moving smartpinters - edges to subsequent nodes
+    std::vector<std::unique_ptr <GraphEdge *>> _childEdges();  // SCS 28.09. Task 4: moving smartpinters - edges to subsequent nodes
 
     // data handles (not owned)
-    std::vector<std::shared_ptr <GraphEdge *>> _parentEdges; // SCS 28.09. Task 4: moving smartpinters - edges to preceding nodes 
+    std::vector<std::shared_ptr <GraphEdge *>> _parentEdges(); // SCS 28.09. Task 4: moving smartpinters - edges to preceding nodes 
     ChatBot  _chatBot; // SCS 28.09. Task 5 
 
     ////
@@ -37,10 +37,10 @@ public:
 
     // getter / setter
     int GetID() { return _id; }
-    int GetNumberOfChildEdges() { return _childEdges.size(); }
+    int GetNumberOfChildEdges() { std::cout << "GetNumberOfChildEdges" << std::endl;int s = _childEdges().size();std::cout << "s " << s << std::endl;return s; }
     GraphEdge *GetChildEdgeAtIndex(int index);
     std::vector<std::string> GetAnswers() { return _answers; }
-    int GetNumberOfParents() { return _parentEdges.size(); }
+    int GetNumberOfParents() { return _parentEdges().size(); }
 
     // proprietary functions
     void AddToken(std::string token); // add answers to list
@@ -50,7 +50,7 @@ public:
     //// STUDENT CODE
     ////
 
-    void MoveChatbotHere(ChatBot   chatbot);
+    void MoveChatbotHere(ChatBot chatbot);
 
     ////
     //// EOF STUDENT CODE

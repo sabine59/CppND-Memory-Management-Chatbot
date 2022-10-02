@@ -38,9 +38,15 @@ ChatBot::~ChatBot()
     // deallocate heap memory
     if (_image != NULL) // Attention: wxWidgets used NULL and not nullptr
     {
-        delete _image;
+       std::cout << "ChatBot Destructor _image!=NULL" << std::endl;
+       (*_image).~wxBitmap();
+       std::cout << "ChatBot Destructor _image deleted" << std::endl;
         _image = NULL;
     }
+      _chatLogic = nullptr;
+    _rootNode = nullptr;
+
+
 }
 
 //// STUDENT CODE
@@ -72,35 +78,43 @@ ChatBot::~ChatBot()
 
     ChatBot::ChatBot(ChatBot &&source) // SCS 24.09. rule of five -  move constructor
     {
-        std::cout << "ChatBot move constructor is called " << std::endl;
-
-        if (_image != NULL)
-            delete _image;
+       
+    std::cout << "MOVE constructor (c’tor) instance " << &source << " to instance " << this << std::endl;
+        if (_image != NULL) {
+          (*_image).~wxBitmap();
+            _image = NULL;
+        }
         _image = std::move(source._image);
-        source._image = NULL;
-
+       
+          //source._image=NULL;
+         
         _chatLogic = std::move(source._chatLogic);
-        source._chatLogic = nullptr;
-
+       //source._chatLogic = nullptr;
         _rootNode = std::move(source._rootNode);
-        source._rootNode = nullptr;
+       //source._rootNode = nullptr;
+    
     }
 
    ChatBot & ChatBot::operator=(ChatBot &&source)
     { // SCS 24.09. rule of five -  move assignement operator
 
-        std::cout << "ChatBot move assignement operator is called " << this << std::endl;
+         std::cout << "MOVE assignment operator move instance " << &source << " to instance " << this << std::endl;
 
-        if (_image != NULL)
-            delete _image;
+        if (_image != NULL) {
+           
+            (*_image).~wxBitmap();	
+          _image = NULL;
+        }
         _image = std::move(source._image);
-        source._image = NULL;
+        
+   
+         
 
         _chatLogic = std::move(source._chatLogic);
-        source._chatLogic = nullptr;
+       //source._chatLogic = nullptr;
 
         _rootNode = std::move(source._rootNode);
-        source._rootNode = nullptr;
+     // source._rootNode = nullptr;
         return *this;
     }
 // SCS 01.10. rule of five -  copy constructor: is implemented in the header file
@@ -113,21 +127,26 @@ ChatBot::~ChatBot()
 
 void ChatBot::ReceiveMessageFromUser(std::string message)
 {
-
+std::cout << "Receive message from user " << std::endl;
     // loop over all edges and keywords and compute Levenshtein distance to query
     typedef std::pair<GraphEdge *, int> EdgeDist;
     std::vector<EdgeDist> levDists; // format is <ptr,levDist>
-
+std::cout << "Receive message from user : size" << std::endl;
     for (size_t i = 0; i < _currentNode->GetNumberOfChildEdges(); ++i)
     {
+      std::cout << "Receive message from user : getnumber of" << std::endl;
         GraphEdge *edge = _currentNode->GetChildEdgeAtIndex(i);
+      std::cout << "Receive message from user : getchildatindex" << std::endl;
         for (auto keyword : edge->GetKeywords())
         {
+                std::cout << "Receive message from user : ed" << std::endl;
             EdgeDist ed{edge, ComputeLevenshteinDistance(keyword, message)};
+                std::cout << "Receive message from user : push" << std::endl;
             levDists.push_back(ed);
+          std::cout << "Receive message from user : levDist" << std::endl;
         }
     }
-
+std::cout << "Receive message from user : GraphNode* newNode" << std::endl;
     // select best fitting edge to proceed along
     GraphNode *newNode;
     if (levDists.size() > 0)
@@ -144,6 +163,7 @@ void ChatBot::ReceiveMessageFromUser(std::string message)
     }
 
     // tell current node to move chatbot to new node
+  std::cout << "Receive message from user : MoveChatBot" << std::endl;
     _currentNode->MoveChatbotToNewNode(newNode);
 }
 

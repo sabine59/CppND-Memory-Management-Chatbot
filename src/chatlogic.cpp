@@ -25,9 +25,10 @@ ChatLogic::ChatLogic()
   
     std::cout << "count: " << tripleBot->_count << std::endl`*/
     // add pointer to chatlogic so that chatbot answers can be passed on to the GUI
-   _chatBot.SetChatLogicHandle(this);
- std::cout << "ChatBot still alive ?  " << std::endl;
+   std::cout << "ChatBot still alive 0?  " << std::endl;
     ////
+   _chatBot.SetChatLogicHandle(this);
+
     //// EOF STUDENT CODE
 }
 
@@ -183,8 +184,8 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
 
                             _edges.push_back(std::move(edge_unique));
                             // store reference in child node and parent node
-                            (*childNode)->AddEdgeToParentNode(std::move(childNodeEdge_unique));
-                            (*parentNode)->AddEdgeToChildNode(std::move(parentNodeEdge_unique));
+                            (*childNode)->AddEdgeToParentNode(std::move(parentNodeEdge_unique));
+                            (*parentNode)->AddEdgeToChildNode(std::move(childNodeEdge_unique));
                         }
 
                         ////
@@ -234,7 +235,7 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
     _chatBot.SetRootNode(rootNode);
     // ChatBot* hChatbot (std::move(_chatBot));
     //std::shared_ptr<ChatBot > hikingChatbot = std::make_shared<ChatBot >(std::move(doubleBot)); // Call of the ChatBot move constructor
-   rootNode->MoveChatbotHere(_chatBot);
+   rootNode->MoveChatbotHere(std::move(_chatBot));
 
     ////
     //// EOF STUDENT CODE
@@ -253,11 +254,13 @@ void ChatLogic::SetChatbotHandle(ChatBot chatbot)
 
 void ChatLogic::SendMessageToChatbot(std::string message)
 {
+   std::cout << "Send Message To ChatBot" << std::endl;
    _chatBot.ReceiveMessageFromUser(message);
 }
 
 void ChatLogic::SendMessageToUser(std::string message)
 {
+  std::cout << "Send Message To User" << std::endl;
     _panelDialog->PrintChatbotResponse(message);
 }
 

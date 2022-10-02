@@ -10,7 +10,8 @@ GraphNode::~GraphNode()
     //// STUDENT CODE
     ////
    
-
+    _chatBot.~ChatBot();
+  
     ////
     //// EOF STUDENT CODE
 }
@@ -23,31 +24,34 @@ void GraphNode::AddToken(std::string token)
 void GraphNode::AddEdgeToParentNode(std::unique_ptr <GraphEdge *> edge)
 {
    std::shared_ptr <GraphEdge *> parentNodeEdge = std::move(edge);
-   _parentEdges.push_back(parentNodeEdge);
+   _parentEdges().push_back(parentNodeEdge);
 }
 
 void GraphNode::AddEdgeToChildNode(std::unique_ptr <GraphEdge *> edge)
 {
-   _childEdges.push_back(std::move(edge));
+   _childEdges().push_back(std::move(edge));
+  int s = _childEdges().size();
+  std::cout << "AddEdgeToChildNode s " << s << std::endl;
 }
 
 //// STUDENT CODE
 ////
-void GraphNode::MoveChatbotHere( ChatBot   chatbot)
+void GraphNode::MoveChatbotHere( ChatBot chatBot)
 {
-   
-    this->_chatBot = std::move(chatbot);
-    this->_chatBot.SetCurrentNode(this);  
+    std::cout << "MoveChatBotHere " << std::endl;
+   this->_chatBot = std::move(chatBot);
+   std::cout << "MoveChatBotHere " << std::endl;
+   this->_chatBot.SetCurrentNode(this);  
     
 
 }
 
 void GraphNode::MoveChatbotToNewNode(GraphNode *newNode)
 {
+std::cout << "Move Chatbot to new Node " << std::endl;
+   newNode->MoveChatbotHere(_chatBot);
 
-    newNode->MoveChatbotHere(_chatBot);
-
-    _chatBot.~ChatBot(); // call move assignement operator to invalidate _chatbot after movement
+   this->_chatBot.~ChatBot(); // call move assignement operator to invalidate _chatbot after movement
 }
 ////
 //// EOF STUDENT CODE
@@ -57,7 +61,7 @@ GraphEdge *GraphNode::GetChildEdgeAtIndex(int index)
     //// STUDENT CODE
     ////
     
-	GraphEdge * returnValue = *_childEdges[index].get();
+	GraphEdge  *returnValue =*_childEdges().at(index).get();
     return returnValue;
 
     ////

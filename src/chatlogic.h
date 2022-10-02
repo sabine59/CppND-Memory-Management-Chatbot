@@ -26,7 +26,7 @@ private:
 
     // data handles (not owned)
     GraphNode *_currentNode;
-    ChatBot GetChatBot() {ChatBot _chatBot("../images/chatbot.png"); return std::move(_chatBot); }
+    ChatBot GetChatBot() {ChatBot _chatBot("../images/chatbot.png"); return _chatBot; }
     ChatBot _chatBot = GetChatBot();
     
     ChatBotPanelDialog *_panelDialog;

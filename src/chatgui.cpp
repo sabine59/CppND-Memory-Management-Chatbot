@@ -85,7 +85,9 @@ END_EVENT_TABLE()
 
 ChatBotFrameImagePanel::ChatBotFrameImagePanel(wxFrame *parent) : wxPanel(parent) {}
 
-ChatBotFrameImagePanel::~ChatBotFrameImagePanel() {}
+ChatBotFrameImagePanel::~ChatBotFrameImagePanel() {
+    _image.~wxBitmap();
+}
 
 
 void ChatBotFrameImagePanel::paintEvent(wxPaintEvent &evt)
@@ -154,7 +156,7 @@ ChatBotPanelDialog::~ChatBotPanelDialog()
     //// STUDENT CODE
     ////
     // _chatLogic smartpointer is deleted automatically
-   
+    _image.~wxBitmap();
     ////
     //// EOF STUDENT CODE
 }
@@ -218,7 +220,7 @@ ChatBotPanelDialogItem::ChatBotPanelDialogItem(wxPanel *parent, wxString text, b
 {
     // retrieve image from chatbot
     wxBitmap *bitmap = isFromUser == true ? nullptr : ((ChatBotPanelDialog*)parent)->GetChatLogicHandle()->GetImageFromChatbot(); 
-
+  std::cout << "chatgui: GetImageFromChatbot " << std::endl;
     // create image and text
     _chatBotImg = new wxStaticBitmap(this, wxID_ANY, (isFromUser ? wxBitmap(imgBasePath + "user.png", wxBITMAP_TYPE_PNG) : *bitmap), wxPoint(-1, -1), wxSize(-1, -1));
       
