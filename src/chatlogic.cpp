@@ -18,7 +18,12 @@ ChatLogic::ChatLogic()
 
     // create instance of chatbot
     _chatBot = new ChatBot("../images/chatbot.png");
-
+    ChatBot * doubleBot(_chatBot);
+    std::cout << "count: " << doubleBot->_count << std::endl;
+  ChatBot * tripleBot;
+  tripleBot = _chatBot;
+  
+    std::cout << "count: " << tripleBot->_count << std::endl;
     // add pointer to chatlogic so that chatbot answers can be passed on to the GUI
     _chatBot->SetChatLogicHandle(this);
     ////

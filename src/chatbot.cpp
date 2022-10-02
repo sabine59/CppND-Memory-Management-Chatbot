@@ -22,7 +22,7 @@ ChatBot::ChatBot()
 ChatBot::ChatBot(std::string filename)
 {
     std::cout << "ChatBot Constructor" << std::endl;
-
+    _count = 0; // SCS debug
     // invalidate data handles
     _chatLogic = nullptr;
     _rootNode = nullptr;
@@ -45,7 +45,64 @@ ChatBot::~ChatBot()
 
 //// STUDENT CODE
 ////
+    ChatBot::ChatBot(const ChatBot &source) // SCS 01.10. rule of five - copy constructor
+    {
 
+        std::cout << "ChatBot copy constructor " << std::endl;
+        _count = source._count +3;
+        // allocate memory according to the source image size
+        _image = new wxBitmap(source._image->GetWidth(), source._image->GetHeight(), source._image->GetDepth());
+        *_image = *source._image;       // deep copy of the image
+        _chatLogic = source._chatLogic; // copy just the handle, because ChatLogic/Chatbot constructs recursively
+        _rootNode = source._rootNode;   // copy just the handle
+    }
+
+   ChatBot &ChatBot::operator=(const ChatBot &source) // SCS 01.10. rule of five - copy assignment operator
+    {
+
+        std::cout << "ChatBot copy assignement operaot " << std::endl;
+        // allocate memory according to the source image size
+        _count=4;
+        _image = new wxBitmap(source._image->GetWidth(), source._image->GetHeight(), source._image->GetDepth());
+        *_image = *source._image;       // deep copy of the image
+        _chatLogic = source._chatLogic; // copy just the handle, because ChatLogic/Chatbot constructs recursively
+        _rootNode = source._rootNode;   // copy just the handle
+        return *this;
+    }
+
+    ChatBot::ChatBot(ChatBot &&source) // SCS 24.09. rule of five -  move constructor
+    {
+        std::cout << "ChatBot move constructor is called " << std::endl;
+
+        if (_image != NULL)
+            delete _image;
+        _image = std::move(source._image);
+        source._image = NULL;
+
+        _chatLogic = std::move(source._chatLogic);
+        source._chatLogic = nullptr;
+
+        _rootNode = std::move(source._rootNode);
+        source._rootNode = nullptr;
+    }
+
+   ChatBot &ChatBot::operator=(ChatBot &&source)
+    { // SCS 24.09. rule of five -  move assignement operator
+
+        std::cout << "ChatBot move assignement operator is called " << this << std::endl;
+
+        if (_image != NULL)
+            delete _image;
+        _image = std::move(source._image);
+        source._image = NULL;
+
+        _chatLogic = std::move(source._chatLogic);
+        source._chatLogic = nullptr;
+
+        _rootNode = std::move(source._rootNode);
+        source._rootNode = nullptr;
+        return *this;
+    }
 // SCS 01.10. rule of five -  copy constructor: is implemented in the header file
 // SCS 01.10. rule of five -  copy assignment: operator is is implemented in the header file
 // SCS 24.09. rule of five -  move constructor: is implemented in the header file

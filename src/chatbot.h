@@ -10,6 +10,7 @@ class ChatLogic; // forward declaration
 
 class ChatBot
 {
+   
 private:
     // data handles (owned)
     wxBitmap *_image; // avatar image
@@ -19,72 +20,23 @@ private:
     GraphNode *_rootNode;
     ChatLogic *_chatLogic;
 
+
+ 
     // proprietary functions
     int ComputeLevenshteinDistance(std::string s1, std::string s2);
 
 public:
+int _count; // SCS debug
     // constructors / destructors
     ChatBot();                     // constructor WITHOUT memory allocation
     ChatBot(std::string filename); // constructor WITH memory allocation
     ~ChatBot();                    // destructor
 
     //// STUDENT CODE
-    ChatBot(const ChatBot &source) // SCS 01.10. rule of five - copy constructor
-    {
-
-        std::cout << "ChatBot copy constructor " << std::endl;
-        // allocate memory according to the source image size
-        _image = new wxBitmap(source._image->GetWidth(), source._image->GetHeight(), source._image->GetDepth());
-        *_image = *source._image;       // deep copy of the image
-        _chatLogic = source._chatLogic; // copy just the handle, because ChatLogic/Chatbot constructs recursively
-        _rootNode = source._rootNode;   // copy just the handle
-    }
-
-    ChatBot &operator=(ChatBot &source) // SCS 01.10. rule of five - copy assignment operator
-    {
-
-        std::cout << "ChatBot copy assignement operaot " << std::endl;
-        // allocate memory according to the source image size
-        _image = new wxBitmap(source._image->GetWidth(), source._image->GetHeight(), source._image->GetDepth());
-        *_image = *source._image;       // deep copy of the image
-        _chatLogic = source._chatLogic; // copy just the handle, because ChatLogic/Chatbot constructs recursively
-        _rootNode = source._rootNode;   // copy just the handle
-        return *this;
-    }
-
-    ChatBot(ChatBot &&source) // SCS 24.09. rule of five -  move constructor
-    {
-        std::cout << "ChatBot move constructor is called " << std::endl;
-
-        if (_image != NULL)
-            delete _image;
-        _image = std::move(source._image);
-        source._image = NULL;
-
-        _chatLogic = std::move(source._chatLogic);
-        source._chatLogic = nullptr;
-
-        _rootNode = std::move(source._rootNode);
-        source._rootNode = nullptr;
-    }
-
-    ChatBot &operator=(ChatBot &&source)
-    { // SCS 24.09. rule of five -  move assignement operator
-
-        std::cout << "ChatBot move assignement operator is called " << this << std::endl;
-
-        if (_image != NULL)
-            delete _image;
-        _image = std::move(source._image);
-        source._image = NULL;
-
-        _chatLogic = std::move(source._chatLogic);
-        source._chatLogic = nullptr;
-
-        _rootNode = std::move(source._rootNode);
-        source._rootNode = nullptr;
-        return *this;
-    }
+    ChatBot(const ChatBot &source); // SCS 01.10. rule of five - copy constructor
+    ChatBot & operator=(const ChatBot &source); // SCS 01.10. rule of five - copy assignment operator
+    ChatBot(ChatBot &&source); // SCS 01.10. rule of five - move constructor
+    ChatBot & operator=(ChatBot &&source); // SCS 01.10. rule of five - move assignment operator
 
     //// EOF STUDENT CODE
 
