@@ -17,15 +17,16 @@ ChatLogic::ChatLogic()
     ////
 
     // create instance of chatbot
-    _chatBot = new ChatBot("../images/chatbot.png");
-    ChatBot * doubleBot(_chatBot);
-    std::cout << "count: " << doubleBot->_count << std::endl;
-  ChatBot * tripleBot;
-  tripleBot = _chatBot;
+   
+
   
-    std::cout << "count: " << tripleBot->_count << std::endl;
+/*  ChatBot * tripleBot;
+  tripleBot =std::move(_chatBot);
+  
+    std::cout << "count: " << tripleBot->_count << std::endl`*/
     // add pointer to chatlogic so that chatbot answers can be passed on to the GUI
-    _chatBot->SetChatLogicHandle(this);
+   _chatBot.SetChatLogicHandle(this);
+ std::cout << "ChatBot still alive ?  " << std::endl;
     ////
     //// EOF STUDENT CODE
 }
@@ -230,10 +231,10 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
     }
 
     // add chatbot to graph root node
-    _chatBot->SetRootNode(rootNode);
+    _chatBot.SetRootNode(rootNode);
     // ChatBot* hChatbot (std::move(_chatBot));
-    std::shared_ptr<ChatBot *> hikingChatbot = std::make_shared<ChatBot *>(std::move(_chatBot)); // Call of the ChatBot move constructor
-    rootNode->MoveChatbotHere(hikingChatbot);
+    //std::shared_ptr<ChatBot > hikingChatbot = std::make_shared<ChatBot >(std::move(doubleBot)); // Call of the ChatBot move constructor
+   rootNode->MoveChatbotHere(_chatBot);
 
     ////
     //// EOF STUDENT CODE
@@ -244,14 +245,15 @@ void ChatLogic::SetPanelDialogHandle(ChatBotPanelDialog *panelDialog)
     _panelDialog = panelDialog;
 }
 
-void ChatLogic::SetChatbotHandle(ChatBot *chatbot)
+void ChatLogic::SetChatbotHandle(ChatBot chatbot)
 {
-    _chatBot = chatbot;
+  std::cout << "Set Chatbot Handle" << std::endl;
+   _chatBot = chatbot;
 }
 
 void ChatLogic::SendMessageToChatbot(std::string message)
 {
-    _chatBot->ReceiveMessageFromUser(message);
+   _chatBot.ReceiveMessageFromUser(message);
 }
 
 void ChatLogic::SendMessageToUser(std::string message)
@@ -261,5 +263,7 @@ void ChatLogic::SendMessageToUser(std::string message)
 
 wxBitmap *ChatLogic::GetImageFromChatbot()
 {
-    return _chatBot->GetImageHandle();
+    std::cout << "Get Image Handle" << std::endl;
+   return _chatBot.GetImageHandle();
+ 
 }

@@ -21,7 +21,7 @@ private:
 
     // data handles (not owned)
     std::vector<std::shared_ptr <GraphEdge *>> _parentEdges; // SCS 28.09. Task 4: moving smartpinters - edges to preceding nodes 
-    std::shared_ptr <ChatBot *> _chatBot; // SCS 28.09. Task 5 
+    ChatBot  _chatBot; // SCS 28.09. Task 5 
 
     ////
     //// EOF STUDENT CODE
@@ -50,7 +50,7 @@ public:
     //// STUDENT CODE
     ////
 
-    void MoveChatbotHere(std::shared_ptr <ChatBot *>  chatbot);
+    void MoveChatbotHere(ChatBot   chatbot);
 
     ////
     //// EOF STUDENT CODE

@@ -11,9 +11,9 @@
 // constructor WITHOUT memory allocation
 ChatBot::ChatBot()
 {
-    std::cout << "ChatBot Constructor" << std::endl;
+    std::cout << "ChatBot Constructor WITHOUT memory allocation" << std::endl;
     // invalidate data handles
-    _image = nullptr;
+    _image = NULL;
     _chatLogic = nullptr;
     _rootNode = nullptr;
 }
@@ -21,8 +21,8 @@ ChatBot::ChatBot()
 // constructor WITH memory allocation
 ChatBot::ChatBot(std::string filename)
 {
-    std::cout << "ChatBot Constructor" << std::endl;
-    _count = 0; // SCS debug
+    std::cout << "ChatBot Constructor WITH memory allocation" << std::endl;
+   
     // invalidate data handles
     _chatLogic = nullptr;
     _rootNode = nullptr;
@@ -49,7 +49,7 @@ ChatBot::~ChatBot()
     {
 
         std::cout << "ChatBot copy constructor " << std::endl;
-        _count = source._count +3;
+       
         // allocate memory according to the source image size
         _image = new wxBitmap(source._image->GetWidth(), source._image->GetHeight(), source._image->GetDepth());
         *_image = *source._image;       // deep copy of the image
@@ -60,9 +60,9 @@ ChatBot::~ChatBot()
    ChatBot &ChatBot::operator=(const ChatBot &source) // SCS 01.10. rule of five - copy assignment operator
     {
 
-        std::cout << "ChatBot copy assignement operaot " << std::endl;
+        std::cout << "ChatBot copy assignement operator " << std::endl;
         // allocate memory according to the source image size
-        _count=4;
+        
         _image = new wxBitmap(source._image->GetWidth(), source._image->GetHeight(), source._image->GetDepth());
         *_image = *source._image;       // deep copy of the image
         _chatLogic = source._chatLogic; // copy just the handle, because ChatLogic/Chatbot constructs recursively
@@ -86,7 +86,7 @@ ChatBot::~ChatBot()
         source._rootNode = nullptr;
     }
 
-   ChatBot &ChatBot::operator=(ChatBot &&source)
+   ChatBot & ChatBot::operator=(ChatBot &&source)
     { // SCS 24.09. rule of five -  move assignement operator
 
         std::cout << "ChatBot move assignement operator is called " << this << std::endl;

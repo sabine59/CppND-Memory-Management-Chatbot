@@ -33,11 +33,11 @@ void GraphNode::AddEdgeToChildNode(std::unique_ptr <GraphEdge *> edge)
 
 //// STUDENT CODE
 ////
-void GraphNode::MoveChatbotHere(std::shared_ptr <ChatBot *>  chatbot)
+void GraphNode::MoveChatbotHere( ChatBot   chatbot)
 {
    
-    this->_chatBot = chatbot;
-    (*chatbot)->SetCurrentNode(this);  
+    this->_chatBot = std::move(chatbot);
+    this->_chatBot.SetCurrentNode(this);  
     
 
 }
@@ -47,7 +47,7 @@ void GraphNode::MoveChatbotToNewNode(GraphNode *newNode)
 
     newNode->MoveChatbotHere(_chatBot);
 
-    _chatBot = std::move(nullptr); // call move assignement operator to invalidate _chatbot after movement
+    _chatBot.~ChatBot(); // call move assignement operator to invalidate _chatbot after movement
 }
 ////
 //// EOF STUDENT CODE
