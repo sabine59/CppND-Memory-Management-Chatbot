@@ -86,7 +86,7 @@ END_EVENT_TABLE()
 ChatBotFrameImagePanel::ChatBotFrameImagePanel(wxFrame *parent) : wxPanel(parent) {}
 
 ChatBotFrameImagePanel::~ChatBotFrameImagePanel() {
-    _image.~wxBitmap();
+   // _image.~wxBitmap();
 }
 
 
@@ -156,10 +156,7 @@ ChatBotPanelDialog::~ChatBotPanelDialog()
     //// STUDENT CODE
     ////
     // _chatLogic smartpointer is deleted automatically
- /*   if(_dialogSizer != nullptr) {
-      delete _dialogSizer;
-      _dialogSizer = nullptr;
-    } */
+
     _image.~wxBitmap();
     ////
     //// EOF STUDENT CODE
@@ -252,7 +249,7 @@ ChatBotPanelDialogItem::~ChatBotPanelDialogItem() { //SCS 22.09.
         _chatBotImg = NULL;
     } else {
 
-    }
+    } 
     if (_chatBotTxt != NULL) {
 
         delete _chatBotTxt;

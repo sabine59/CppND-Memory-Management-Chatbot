@@ -14,9 +14,8 @@ GraphNode::~GraphNode()
     //// STUDENT CODE
     ////
    
-  std::cout << "GraphNode destructor id: " << _id <<  " destructs chatbot " << std::endl;
-
-  _chatBot.~ChatBot(); // not owned
+    // _chatBot is not owned.
+    // All the other members are vecotors, which are destroyed automatically
  
     ////
     //// EOF STUDENT CODE

@@ -11,7 +11,7 @@ class ChatBotPanelDialog : public wxScrolledWindow
 {
 private:
     // control elements
-    wxBoxSizer *_dialogSizer=nullptr;
+    wxBoxSizer *_dialogSizer;
     wxBitmap _image;
 
     //// STUDENT CODE

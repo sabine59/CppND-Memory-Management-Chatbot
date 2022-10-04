@@ -11,8 +11,8 @@
 // constructor WITHOUT memory allocation
 ChatBot::ChatBot()
 {
-    //std::cout << "ChatBot Constructor WITHOUT memory allocation" << std::endl;
-    // invalidate data handles
+    // std::cout << "ChatBot Constructor WITHOUT memory allocation" << std::endl;
+    //  invalidate data handles
     _image = NULL;
     _chatLogic = nullptr;
     _rootNode = nullptr;
@@ -22,8 +22,8 @@ ChatBot::ChatBot()
 // constructor WITH memory allocation
 ChatBot::ChatBot(std::string filename)
 {
-    std::cout << "ChatBot Constructor WITH memory allocation, chatBot at: " << this << std::endl;
-   
+    std::cout << "\r\nChatBot Constructor WITH memory allocation, chatBot at: " << this << std::endl;
+
     // invalidate data handles
     _chatLogic = nullptr;
     _rootNode = nullptr;
@@ -39,81 +39,80 @@ ChatBot::~ChatBot()
     // deallocate heap memory
     if (_image != NULL) // Attention: wxWidgets used NULL and not nullptr
     {
-       (*_image).~wxBitmap();
+        (*_image).~wxBitmap();
         _image = NULL;
     }
     _chatLogic = nullptr;
     _rootNode = nullptr;
     _currentNode = nullptr;
-
-
 }
 
 //// STUDENT CODE
 ////
-    ChatBot::ChatBot(const ChatBot &source) // SCS 01.10. rule of five - copy constructor
+ChatBot::ChatBot(const ChatBot &source) // SCS 01.10. rule of five - copy constructor
+{
+
+    std::cout << "ChatBot copy constructor " << std::endl;
+
+    // allocate memory according to the source image size
+    _image = new wxBitmap(source._image->GetWidth(), source._image->GetHeight(), source._image->GetDepth());
+    *_image = *source._image;           // deep copy of the image
+    _chatLogic = source._chatLogic;     // copy just the handle, because ChatLogic/Chatbot constructs recursively
+    _rootNode = source._rootNode;       // copy just the handle
+    _currentNode = source._currentNode; // copy just the handle
+}
+
+ChatBot &ChatBot::operator=(const ChatBot &source) // SCS 01.10. rule of five - copy assignment operator
+{
+
+    std::cout << "ChatBot copy assignement operator " << std::endl;
+    // allocate memory according to the source image size
+
+    _image = new wxBitmap(source._image->GetWidth(), source._image->GetHeight(), source._image->GetDepth());
+    *_image = *source._image;           // deep copy of the image
+    _chatLogic = source._chatLogic;     // copy just the handle, because ChatLogic/Chatbot constructs recursively
+    _rootNode = source._rootNode;       // copy just the handle
+    _currentNode = source._currentNode; // copy just the handle
+    return *this;
+}
+
+ChatBot::ChatBot(ChatBot &&source) // SCS 24.09. rule of five -  move constructor
+{
+
+    std::cout << "\r\nChatBot MOVE constructor (c’tor) instance " << &source << " to instance " << this << std::endl;
+    if (_image != NULL)
     {
-
-        std::cout << "ChatBot copy constructor " << std::endl;
-       
-        // allocate memory according to the source image size
-        _image = new wxBitmap(source._image->GetWidth(), source._image->GetHeight(), source._image->GetDepth());
-        *_image = *source._image;       // deep copy of the image
-        _chatLogic = source._chatLogic; // copy just the handle, because ChatLogic/Chatbot constructs recursively
-        _rootNode = source._rootNode;   // copy just the handle
-       _currentNode = source._currentNode;   // copy just the handle
-    }
-
-   ChatBot &ChatBot::operator=(const ChatBot &source) // SCS 01.10. rule of five - copy assignment operator
-    {
-
-        std::cout << "ChatBot copy assignement operator " << std::endl;
-        // allocate memory according to the source image size
-        
-        _image = new wxBitmap(source._image->GetWidth(), source._image->GetHeight(), source._image->GetDepth());
-        *_image = *source._image;       // deep copy of the image
-        _chatLogic = source._chatLogic; // copy just the handle, because ChatLogic/Chatbot constructs recursively
-        _rootNode = source._rootNode;   // copy just the handle
-     _currentNode = source._currentNode;   // copy just the handle
-        return *this;
-    }
-
-    ChatBot::ChatBot(ChatBot &&source) // SCS 24.09. rule of five -  move constructor
-    {
-       
-    std::cout << "ChatBot MOVE constructor (c’tor) instance " << &source << " to instance " << this << std::endl;
-        if (_image != NULL) {
-          (*_image).~wxBitmap();
-            _image = NULL;
-        }
-        _image = std::move(source._image);
-        _chatLogic = std::move(source._chatLogic);
-        _rootNode = std::move(source._rootNode);
-      _currentNode = std::move(source._currentNode);   
-
+        (*_image).~wxBitmap();
+        _image = NULL;
+    } 
+   // I don't move the chatbot's image, because the default move assignement operator of wxBitmap does not work properly
+   // and the dialog panel takes it anyway from the first chatbot instance, which lasts until the end of the program
+   // _image = std::move(source._image);  
+    _chatLogic = std::move(source._chatLogic);
+    _rootNode = std::move(source._rootNode);
+    _currentNode = std::move(source._currentNode);
     
-    }
+}
 
-   ChatBot & ChatBot::operator=(ChatBot &&source)
-    { // SCS 24.09. rule of five -  move assignement operator
+ChatBot &ChatBot::operator=(ChatBot &&source)
+{ // SCS 24.09. rule of five -  move assignement operator
 
-         std::cout << "ChatBot MOVE assignment operator move instance " << &source << " to instance " << this << std::endl;
+    std::cout << "ChatBot MOVE assignment operator move instance " << &source << " to instance " << this << std::endl;
 
-        if (_image != NULL) {
-           
-            (*_image).~wxBitmap();	
-          _image = NULL;
-        }
-        _image = std::move(source._image);
-        _chatLogic = std::move(source._chatLogic);
-        _rootNode = std::move(source._rootNode);
-   	    _currentNode = std::move(source._currentNode); 
-        return *this;
-    }
-// SCS 01.10. rule of five -  copy constructor: is implemented in the header file
-// SCS 01.10. rule of five -  copy assignment: operator is is implemented in the header file
-// SCS 24.09. rule of five -  move constructor: is implemented in the header file
-// SCS 24.09. rule of five -  move assignement operator: is implemented in header-file,
+    if (_image != NULL)
+    {
+
+        (*_image).~wxBitmap();
+        _image = NULL;
+    } 
+   // I don't move the chatbot's image, because the default move assignement operator  of wxBitmap does not work properly
+   // and the dialog panel takes it anyway from the first chatbot instance, which lasts until the end of the program
+   // _image = std::move(source._image);
+    _chatLogic = std::move(source._chatLogic);
+    _rootNode = std::move(source._rootNode);
+    _currentNode = std::move(source._currentNode);
+    return *this;
+}
 
 ////
 //// EOF STUDENT CODE
@@ -121,14 +120,13 @@ ChatBot::~ChatBot()
 void ChatBot::ReceiveMessageFromUser(std::string message)
 {
 
-  std::cout << "Receive message from user : _chatbot at "<< this << std::endl;
     // loop over all edges and keywords and compute Levenshtein distance to query
     typedef std::pair<GraphEdge *, int> EdgeDist;
     std::vector<EdgeDist> levDists; // format is <ptr,levDist>
 
     for (size_t i = 0; i < _currentNode->GetNumberOfChildEdges(); ++i)
     {
-     
+
         GraphEdge *edge = _currentNode->GetChildEdgeAtIndex(i);
         for (auto keyword : edge->GetKeywords())
         {

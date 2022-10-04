@@ -16,13 +16,12 @@ ChatLogic::ChatLogic()
     //// STUDENT CODE
     ////
 
-    // create instance of chatbot
-   
+    // create instance of chatbot - is done in the header file
 
     // add pointer to chatlogic so that chatbot answers can be passed on to the GUI
 
     ////
-   _chatBot.SetChatLogicHandle(this); // _chatBot instance ios created in headr file
+    _chatBot.SetChatLogicHandle(this); // _chatBot instance ios created in headr file
 
     //// EOF STUDENT CODE
 }
@@ -34,9 +33,8 @@ ChatLogic::~ChatLogic()
 
     // the owned smartpointers are deleted automatically,
     // the other pointers are not owned
-  
-  std::cout << "ChatLogic destructor  destructs chatbot " << std::endl;
-  _currentNode->GetNodesChatBotHandle().~ChatBot();
+
+    _currentNode->GetNodesChatBotHandle().~ChatBot(); // this is the remaining chatBot, it has to be destructed here
 
     ////
     //// EOF STUDENT CODE
@@ -66,7 +64,7 @@ void ChatLogic::AddAllTokensToElement(std::string tokenID, tokenlist &tokens, T 
 
 void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
 {
-std::cout << "LoadAnswerGraphFromFile : _chatbot at " << &this->_chatBot << std::endl;
+
     // load file with answer graph elements
     std::ifstream file(filename);
 
@@ -232,8 +230,8 @@ std::cout << "LoadAnswerGraphFromFile : _chatbot at " << &this->_chatBot << std:
 
     // add chatbot to graph root node
     _chatBot.SetRootNode(rootNode);
-   rootNode->MoveChatbotHere(std::move(_chatBot));
-   _currentNode = rootNode;
+    rootNode->MoveChatbotHere(std::move(_chatBot));
+    _currentNode = rootNode;
 
     ////
     //// EOF STUDENT CODE
@@ -246,23 +244,21 @@ void ChatLogic::SetPanelDialogHandle(ChatBotPanelDialog *panelDialog)
 
 void ChatLogic::SetChatbotHandle(ChatBot chatbot)
 {
-   _chatBot = chatbot;
+    _chatBot = chatbot;
 }
 
 void ChatLogic::SendMessageToChatbot(std::string message)
 {
-   std::cout << "Send Message To ChatBot, message: " << message << std::endl;
-   _currentNode->GetNodesChatBotHandle().ReceiveMessageFromUser(message);
+    _currentNode->GetNodesChatBotHandle().ReceiveMessageFromUser(message);
 }
 
 void ChatLogic::SendMessageToUser(std::string message)
 {
-  std::cout << "Send Message To User" << std::endl;
     _panelDialog->PrintChatbotResponse(message);
 }
 
 wxBitmap *ChatLogic::GetImageFromChatbot()
 {
    return _chatBot.GetImageHandle();
- 
+ // return _currentNode->GetNodesChatBotHandle().GetImageHandle();
 }
