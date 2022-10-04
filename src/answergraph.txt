@@ -16,23 +16,17 @@
 
 <TYPE:NODE><ID:7><ANSWER:Static memory persists throughout the entire life of the program, and is usually used to store things like global variables, or variables created with the static clause. -- There are no more topics in this section, starting over!>
 
-<TYPE:NODE><ID:8><ANSWER:Bye, have a nice day!>
-<TYPE:NODE><ID:9><ANSWER:Bye now! See you ..>
-<TYPE:NODE><ID:10><ANSWER:Bye bye! Have fun ..>
+
 
 
 
 // connect nodes with edges
 <TYPE:EDGE><ID:0><PARENT:0><CHILD:1><KEYWORD:pointer><KEYWORD:smart pointer><KEYWORD:Hi>
 <TYPE:EDGE><ID:1><PARENT:0><CHILD:2><KEYWORD:memory model><KEYWORD:heap><KEYWORD:stack>
-<TYPE:EDGE><ID:7><PARENT:0><CHILD:8><KEYWORD:Bye><KEYWORD:Bye bye><KEYWORD:bye bye>
 
 <TYPE:EDGE><ID:2><PARENT:1><CHILD:3><KEYWORD:unique pointer><KEYWORD:shared pointer><KEYWORD:weak pointer>
 <TYPE:EDGE><ID:3><PARENT:1><CHILD:4><KEYWORD:NULL><KEYWORD:null pointer><KEYWORD:nullptr>
-<TYPE:EDGE><ID:8><PARENT:0><CHILD:9><KEYWORD:Bye now><KEYWORD:See you><KEYWORD:bye>
 
 <TYPE:EDGE><ID:4><PARENT:2><CHILD:5><KEYWORD:stack><KEYWORD:stack memory><KEYWORD:local variable storage>
 <TYPE:EDGE><ID:5><PARENT:2><CHILD:6><KEYWORD:heap><KEYWORD:heap memory><KEYWORD:dynamic storage>
 <TYPE:EDGE><ID:6><PARENT:2><CHILD:7><KEYWORD:static><KEYWORD:static memory><KEYWORD:global variable storage>
-
-<TYPE:EDGE><ID:9><PARENT:0><CHILD:10><KEYWORD:Done><KEYWORD:Ready><KEYWORD:bye bye><KEYWORD:Bye bye>

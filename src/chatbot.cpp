@@ -11,40 +11,40 @@
 // constructor WITHOUT memory allocation
 ChatBot::ChatBot()
 {
-    std::cout << "ChatBot Constructor WITHOUT memory allocation" << std::endl;
+    //std::cout << "ChatBot Constructor WITHOUT memory allocation" << std::endl;
     // invalidate data handles
     _image = NULL;
     _chatLogic = nullptr;
     _rootNode = nullptr;
+    _currentNode = nullptr;
 }
 
 // constructor WITH memory allocation
 ChatBot::ChatBot(std::string filename)
 {
-    std::cout << "ChatBot Constructor WITH memory allocation" << std::endl;
+    std::cout << "ChatBot Constructor WITH memory allocation, chatBot at: " << this << std::endl;
    
     // invalidate data handles
     _chatLogic = nullptr;
     _rootNode = nullptr;
-
+    _currentNode = nullptr;
     // load image into heap memory
     _image = new wxBitmap(filename, wxBITMAP_TYPE_PNG);
 }
 
 ChatBot::~ChatBot()
 {
-    std::cout << "ChatBot Destructor" << std::endl;
+    std::cout << "ChatBot Destructor, destruct chatbot at: " << this << std::endl;
 
     // deallocate heap memory
     if (_image != NULL) // Attention: wxWidgets used NULL and not nullptr
     {
-       std::cout << "ChatBot Destructor _image!=NULL" << std::endl;
        (*_image).~wxBitmap();
-       std::cout << "ChatBot Destructor _image deleted" << std::endl;
         _image = NULL;
     }
-      _chatLogic = nullptr;
+    _chatLogic = nullptr;
     _rootNode = nullptr;
+    _currentNode = nullptr;
 
 
 }
@@ -61,6 +61,7 @@ ChatBot::~ChatBot()
         *_image = *source._image;       // deep copy of the image
         _chatLogic = source._chatLogic; // copy just the handle, because ChatLogic/Chatbot constructs recursively
         _rootNode = source._rootNode;   // copy just the handle
+       _currentNode = source._currentNode;   // copy just the handle
     }
 
    ChatBot &ChatBot::operator=(const ChatBot &source) // SCS 01.10. rule of five - copy assignment operator
@@ -73,13 +74,14 @@ ChatBot::~ChatBot()
         *_image = *source._image;       // deep copy of the image
         _chatLogic = source._chatLogic; // copy just the handle, because ChatLogic/Chatbot constructs recursively
         _rootNode = source._rootNode;   // copy just the handle
+     _currentNode = source._currentNode;   // copy just the handle
         return *this;
     }
 
     ChatBot::ChatBot(ChatBot &&source) // SCS 24.09. rule of five -  move constructor
     {
        
-    std::cout << "MOVE constructor (c’tor) instance " << &source << " to instance " << this << std::endl;
+    std::cout << "ChatBot MOVE constructor (c’tor) instance " << &source << " to instance " << this << std::endl;
         if (_image != NULL) {
           (*_image).~wxBitmap();
             _image = NULL;
@@ -91,6 +93,7 @@ ChatBot::~ChatBot()
         _chatLogic = std::move(source._chatLogic);
        //source._chatLogic = nullptr;
         _rootNode = std::move(source._rootNode);
+      _currentNode = std::move(source._currentNode);   
        //source._rootNode = nullptr;
     
     }
@@ -98,7 +101,7 @@ ChatBot::~ChatBot()
    ChatBot & ChatBot::operator=(ChatBot &&source)
     { // SCS 24.09. rule of five -  move assignement operator
 
-         std::cout << "MOVE assignment operator move instance " << &source << " to instance " << this << std::endl;
+         std::cout << "ChatBot MOVE assignment operator move instance " << &source << " to instance " << this << std::endl;
 
         if (_image != NULL) {
            
@@ -106,14 +109,11 @@ ChatBot::~ChatBot()
           _image = NULL;
         }
         _image = std::move(source._image);
-        
-   
-         
-
         _chatLogic = std::move(source._chatLogic);
        //source._chatLogic = nullptr;
 
         _rootNode = std::move(source._rootNode);
+   	    _currentNode = std::move(source._currentNode); 
      // source._rootNode = nullptr;
         return *this;
     }
@@ -127,11 +127,13 @@ ChatBot::~ChatBot()
 
 void ChatBot::ReceiveMessageFromUser(std::string message)
 {
-std::cout << "Receive message from user " << std::endl;
+std::cout << "Receive message from user, message: " << message << std::endl;
+
+  std::cout << "Receive message from user : _chatbot at "<< this << std::endl;
     // loop over all edges and keywords and compute Levenshtein distance to query
     typedef std::pair<GraphEdge *, int> EdgeDist;
     std::vector<EdgeDist> levDists; // format is <ptr,levDist>
-std::cout << "Receive message from user : size" << std::endl;
+
     for (size_t i = 0; i < _currentNode->GetNumberOfChildEdges(); ++i)
     {
       std::cout << "Receive message from user : getnumber of" << std::endl;
@@ -165,6 +167,7 @@ std::cout << "Receive message from user : GraphNode* newNode" << std::endl;
     // tell current node to move chatbot to new node
   std::cout << "Receive message from user : MoveChatBot" << std::endl;
     _currentNode->MoveChatbotToNewNode(newNode);
+    //_chatLogic->SetCurrentNode(newNode);
 }
 
 void ChatBot::SetCurrentNode(GraphNode *node)

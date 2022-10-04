@@ -20,30 +20,6 @@ wx/wx.h
 memory
 -
 
-/home/workspace/CppND-Memory-Management-Chatbot/src/chatlogic.cpp
-fstream
--
-sstream
--
-iostream
--
-vector
--
-iterator
--
-tuple
--
-algorithm
--
-graphedge.h
-/home/workspace/CppND-Memory-Management-Chatbot/src/graphedge.h
-graphnode.h
-/home/workspace/CppND-Memory-Management-Chatbot/src/graphnode.h
-chatbot.h
-/home/workspace/CppND-Memory-Management-Chatbot/src/chatbot.h
-chatlogic.h
-/home/workspace/CppND-Memory-Management-Chatbot/src/chatlogic.h
-
 /home/workspace/CppND-Memory-Management-Chatbot/src/chatlogic.h
 vector
 -
@@ -58,6 +34,16 @@ chatbot.h
 vector
 -
 string
+-
+
+/home/workspace/CppND-Memory-Management-Chatbot/src/graphnode.cpp
+graphedge.h
+/home/workspace/CppND-Memory-Management-Chatbot/src/graphedge.h
+graphnode.h
+/home/workspace/CppND-Memory-Management-Chatbot/src/graphnode.h
+chatlogic.h
+/home/workspace/CppND-Memory-Management-Chatbot/src/chatlogic.h
+iostream
 -
 
 /home/workspace/CppND-Memory-Management-Chatbot/src/graphnode.h

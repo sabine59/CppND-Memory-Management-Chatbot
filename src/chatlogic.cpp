@@ -68,7 +68,7 @@ void ChatLogic::AddAllTokensToElement(std::string tokenID, tokenlist &tokens, T 
 
 void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
 {
-
+std::cout << "LoadAnswerGraphFromFile : _chatbot at " << &this->_chatBot << std::endl;
     // load file with answer graph elements
     std::ifstream file(filename);
 
@@ -183,9 +183,13 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
                             std::unique_ptr<GraphEdge *> parentNodeEdge_unique = std::make_unique<GraphEdge *>(edge);
 
                             _edges.push_back(std::move(edge_unique));
+                            int s = _edges.size();
+ // std::cout << "_edges_push_back s " << s << std::endl;
                             // store reference in child node and parent node
                             (*childNode)->AddEdgeToParentNode(std::move(parentNodeEdge_unique));
+                          // std::cout << "child node id: " <<  (*childNode)->GetID() << std::endl;
                             (*parentNode)->AddEdgeToChildNode(std::move(childNodeEdge_unique));
+                          //  std::cout << "parent node id: " <<  (*parentNode)->GetID()<< std::endl;
                         }
 
                         ////
@@ -233,9 +237,12 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
 
     // add chatbot to graph root node
     _chatBot.SetRootNode(rootNode);
+    std::cout << "rootNode node id: " <<  rootNode->GetID()<< std::endl;
     // ChatBot* hChatbot (std::move(_chatBot));
     //std::shared_ptr<ChatBot > hikingChatbot = std::make_shared<ChatBot >(std::move(doubleBot)); // Call of the ChatBot move constructor
    rootNode->MoveChatbotHere(std::move(_chatBot));
+   _currentNode = rootNode;
+   std::cout << "MoveChatBotHere rootNode->_chatBot._currentNode._id: " << rootNode->GetChatBotCurrentNode() << std::endl;
 
     ////
     //// EOF STUDENT CODE
@@ -254,8 +261,9 @@ void ChatLogic::SetChatbotHandle(ChatBot chatbot)
 
 void ChatLogic::SendMessageToChatbot(std::string message)
 {
-   std::cout << "Send Message To ChatBot" << std::endl;
-   _chatBot.ReceiveMessageFromUser(message);
+   std::cout << "Send Message To ChatBot, message: " << message << std::endl;
+  //std::cout << "Send Message To ChatBot, chatBotHanlde: " <<  _currentNode->GetNodesChatBotHandle() << std::endl;
+   _currentNode->GetNodesChatBotHandle().ReceiveMessageFromUser(message);
 }
 
 void ChatLogic::SendMessageToUser(std::string message)

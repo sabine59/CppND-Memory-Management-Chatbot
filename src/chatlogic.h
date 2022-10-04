@@ -6,6 +6,7 @@
 #include "chatgui.h"
 #include "chatbot.h"
 
+
 // forward declarations
 //class ChatBot;
 class GraphEdge;
@@ -26,8 +27,8 @@ private:
 
     // data handles (not owned)
     GraphNode *_currentNode;
-    ChatBot GetChatBot() {ChatBot _chatBot("../images/chatbot.png"); return _chatBot; }
-    ChatBot _chatBot = GetChatBot();
+    //ChatBot GetChatBot() {ChatBot _chatBot("../images/chatbot.png"); return _chatBot; }
+    ChatBot _chatBot = ChatBot("../images/chatbot.png");
     
     ChatBotPanelDialog *_panelDialog;
 
@@ -47,6 +48,7 @@ public:
     // getter / setter
     void SetPanelDialogHandle(ChatBotPanelDialog *panelDialog);
     void SetChatbotHandle(ChatBot chatbot);
+    void SetCurrentNode(GraphNode* currentNode) {_currentNode = currentNode; }
 
     // proprietary functions
     void LoadAnswerGraphFromFile(std::string filename);
