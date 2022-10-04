@@ -41,12 +41,8 @@ public:
 
     // getters / setters
     void SetCurrentNode(GraphNode *node);
-    void SetRootNode(GraphNode *rootNode) {  std::cout << "SetRootNode ChatBot still alive ?  " << std::endl; _rootNode = rootNode; }
-    void SetChatLogicHandle(ChatLogic *chatLogic) 
-    {
-     std::cout << "ChatLogicHandle: ChatBot still alive ?  " << std::endl;
-        _chatLogic = chatLogic;
-    }
+    void SetRootNode(GraphNode *rootNode) { _rootNode = rootNode; }
+    void SetChatLogicHandle(ChatLogic *chatLogic) { _chatLogic = chatLogic; }
     GraphNode* GetCurrentNode() {return _currentNode; }
     ChatLogic *GetChatLogicHandle() { return _chatLogic; }
     wxBitmap *GetImageHandle() { return _image; }

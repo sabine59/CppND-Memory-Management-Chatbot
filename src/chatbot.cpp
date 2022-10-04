@@ -136,19 +136,14 @@ std::cout << "Receive message from user, message: " << message << std::endl;
 
     for (size_t i = 0; i < _currentNode->GetNumberOfChildEdges(); ++i)
     {
-      std::cout << "Receive message from user : getnumber of" << std::endl;
+     
         GraphEdge *edge = _currentNode->GetChildEdgeAtIndex(i);
-      std::cout << "Receive message from user : getchildatindex" << std::endl;
         for (auto keyword : edge->GetKeywords())
         {
-                std::cout << "Receive message from user : ed" << std::endl;
             EdgeDist ed{edge, ComputeLevenshteinDistance(keyword, message)};
-                std::cout << "Receive message from user : push" << std::endl;
             levDists.push_back(ed);
-          std::cout << "Receive message from user : levDist" << std::endl;
         }
     }
-std::cout << "Receive message from user : GraphNode* newNode" << std::endl;
     // select best fitting edge to proceed along
     GraphNode *newNode;
     if (levDists.size() > 0)
@@ -167,7 +162,7 @@ std::cout << "Receive message from user : GraphNode* newNode" << std::endl;
     // tell current node to move chatbot to new node
   std::cout << "Receive message from user : MoveChatBot" << std::endl;
     _currentNode->MoveChatbotToNewNode(newNode);
-    //_chatLogic->SetCurrentNode(newNode);
+    _chatLogic->SetCurrentNode(newNode);
 }
 
 void ChatBot::SetCurrentNode(GraphNode *node)

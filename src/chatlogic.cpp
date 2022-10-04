@@ -19,15 +19,10 @@ ChatLogic::ChatLogic()
     // create instance of chatbot
    
 
-  
-/*  ChatBot * tripleBot;
-  tripleBot =std::move(_chatBot);
-  
-    std::cout << "count: " << tripleBot->_count << std::endl`*/
     // add pointer to chatlogic so that chatbot answers can be passed on to the GUI
-   std::cout << "ChatBot still alive 0?  " << std::endl;
+
     ////
-   _chatBot.SetChatLogicHandle(this);
+   _chatBot.SetChatLogicHandle(this); // _chatBot instance ios created in headr file
 
     //// EOF STUDENT CODE
 }
@@ -184,12 +179,9 @@ std::cout << "LoadAnswerGraphFromFile : _chatbot at " << &this->_chatBot << std:
 
                             _edges.push_back(std::move(edge_unique));
                             int s = _edges.size();
- // std::cout << "_edges_push_back s " << s << std::endl;
                             // store reference in child node and parent node
                             (*childNode)->AddEdgeToParentNode(std::move(parentNodeEdge_unique));
-                          // std::cout << "child node id: " <<  (*childNode)->GetID() << std::endl;
                             (*parentNode)->AddEdgeToChildNode(std::move(childNodeEdge_unique));
-                          //  std::cout << "parent node id: " <<  (*parentNode)->GetID()<< std::endl;
                         }
 
                         ////
@@ -237,12 +229,8 @@ std::cout << "LoadAnswerGraphFromFile : _chatbot at " << &this->_chatBot << std:
 
     // add chatbot to graph root node
     _chatBot.SetRootNode(rootNode);
-    std::cout << "rootNode node id: " <<  rootNode->GetID()<< std::endl;
-    // ChatBot* hChatbot (std::move(_chatBot));
-    //std::shared_ptr<ChatBot > hikingChatbot = std::make_shared<ChatBot >(std::move(doubleBot)); // Call of the ChatBot move constructor
    rootNode->MoveChatbotHere(std::move(_chatBot));
    _currentNode = rootNode;
-   std::cout << "MoveChatBotHere rootNode->_chatBot._currentNode._id: " << rootNode->GetChatBotCurrentNode() << std::endl;
 
     ////
     //// EOF STUDENT CODE
@@ -255,14 +243,12 @@ void ChatLogic::SetPanelDialogHandle(ChatBotPanelDialog *panelDialog)
 
 void ChatLogic::SetChatbotHandle(ChatBot chatbot)
 {
-  std::cout << "Set Chatbot Handle" << std::endl;
    _chatBot = chatbot;
 }
 
 void ChatLogic::SendMessageToChatbot(std::string message)
 {
    std::cout << "Send Message To ChatBot, message: " << message << std::endl;
-  //std::cout << "Send Message To ChatBot, chatBotHanlde: " <<  _currentNode->GetNodesChatBotHandle() << std::endl;
    _currentNode->GetNodesChatBotHandle().ReceiveMessageFromUser(message);
 }
 
@@ -274,7 +260,7 @@ void ChatLogic::SendMessageToUser(std::string message)
 
 wxBitmap *ChatLogic::GetImageFromChatbot()
 {
-    std::cout << "Get Image Handle" << std::endl;
+    //std::cout << "Get Image Handle" << std::endl;
    return _chatBot.GetImageHandle();
  
 }
