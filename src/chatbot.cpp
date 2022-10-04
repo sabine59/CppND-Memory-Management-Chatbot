@@ -87,14 +87,10 @@ ChatBot::~ChatBot()
             _image = NULL;
         }
         _image = std::move(source._image);
-       
-          //source._image=NULL;
-         
         _chatLogic = std::move(source._chatLogic);
-       //source._chatLogic = nullptr;
         _rootNode = std::move(source._rootNode);
       _currentNode = std::move(source._currentNode);   
-       //source._rootNode = nullptr;
+
     
     }
 
@@ -110,11 +106,8 @@ ChatBot::~ChatBot()
         }
         _image = std::move(source._image);
         _chatLogic = std::move(source._chatLogic);
-       //source._chatLogic = nullptr;
-
         _rootNode = std::move(source._rootNode);
    	    _currentNode = std::move(source._currentNode); 
-     // source._rootNode = nullptr;
         return *this;
     }
 // SCS 01.10. rule of five -  copy constructor: is implemented in the header file
@@ -127,7 +120,6 @@ ChatBot::~ChatBot()
 
 void ChatBot::ReceiveMessageFromUser(std::string message)
 {
-std::cout << "Receive message from user, message: " << message << std::endl;
 
   std::cout << "Receive message from user : _chatbot at "<< this << std::endl;
     // loop over all edges and keywords and compute Levenshtein distance to query
@@ -160,7 +152,6 @@ std::cout << "Receive message from user, message: " << message << std::endl;
     }
 
     // tell current node to move chatbot to new node
-  std::cout << "Receive message from user : MoveChatBot" << std::endl;
     _currentNode->MoveChatbotToNewNode(newNode);
     _chatLogic->SetCurrentNode(newNode);
 }

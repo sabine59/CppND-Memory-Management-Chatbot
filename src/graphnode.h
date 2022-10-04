@@ -41,7 +41,6 @@ public:
     GraphEdge *GetChildEdgeAtIndex(int index);
     std::vector<std::string> GetAnswers() { return _answers; }
     int GetNumberOfParents() { return _parentEdges.size(); }
-    int GetChatBotCurrentNode() { return _chatBot.GetCurrentNode()->GetID(); } // SCS - only for debugging
     ChatBot& GetNodesChatBotHandle() { return _chatBot; } 
 
     // proprietary functions

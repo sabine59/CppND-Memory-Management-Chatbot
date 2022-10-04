@@ -14,7 +14,7 @@ GraphNode::~GraphNode()
     //// STUDENT CODE
     ////
    
-  //std::cout << "GraphNode destructor id: " << _id << std::endl;
+  std::cout << "GraphNode destructor id: " << _id <<  " destructs chatbot " << std::endl;
 
   _chatBot.~ChatBot(); // not owned
  

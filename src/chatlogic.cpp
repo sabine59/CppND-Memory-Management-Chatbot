@@ -34,6 +34,9 @@ ChatLogic::~ChatLogic()
 
     // the owned smartpointers are deleted automatically,
     // the other pointers are not owned
+  
+  std::cout << "ChatLogic destructor  destructs chatbot " << std::endl;
+  _currentNode->GetNodesChatBotHandle().~ChatBot();
 
     ////
     //// EOF STUDENT CODE
@@ -260,7 +263,6 @@ void ChatLogic::SendMessageToUser(std::string message)
 
 wxBitmap *ChatLogic::GetImageFromChatbot()
 {
-    //std::cout << "Get Image Handle" << std::endl;
    return _chatBot.GetImageHandle();
  
 }
